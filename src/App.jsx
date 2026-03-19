@@ -70,6 +70,16 @@ const products = [
     cta: 'Play Now',
   },
   {
+    name: 'Markets',
+    desc: 'Real estate prediction markets. Bet on home prices, rate movements, and housing policy. Crowd intelligence meets real estate data.',
+    icon: <I.TrendUp s={22} />,
+    color: '#3B82F6',
+    tag: 'Beta',
+    tagClass: 'tag-beta',
+    link: LINKS.blueprint,
+    cta: 'Join Beta',
+  },
+  {
     name: 'Ops',
     desc: 'Deal management for mortgage professionals. Live pipeline synced with your LOS, Gmail integration, realtor CRM, commission tracking — one dashboard for your entire business.',
     icon: <I.Layers s={22} />,
@@ -167,7 +177,7 @@ export default function App() {
             <a onClick={() => scrollTo('waitlist')} className="btn btn-secondary btn-lg" style={{cursor:'pointer'}}>Join the Waitlist <I.ArrowRight /></a>
           </div>
           <div className="hero-badges">
-            <div className="hero-chip"><div className="dot"></div>3 Products Live or In Beta</div>
+            <div className="hero-chip"><div className="dot"></div>4 Products Live or In Beta</div>
             <div className="hero-chip"><div className="dot" style={{background:'var(--accent)'}}></div>Built by a Broker</div>
           </div>
         </div>
@@ -189,7 +199,7 @@ export default function App() {
             <div className="stat-label">States Licensed</div>
           </div>
           <div className="stat-item">
-            <div className="stat-value">3</div>
+            <div className="stat-value">4</div>
             <div className="stat-label">Products</div>
           </div>
         </div>
@@ -328,6 +338,7 @@ export default function App() {
                 <h4>Products</h4>
                 <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer">Blueprint</a>
                 <a href={LINKS.pricepoint} target="_blank" rel="noopener noreferrer">PricePoint</a>
+                <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer">Markets</a>
                 <a onClick={() => scrollTo('waitlist')} style={{cursor:'pointer'}}>Ops</a>
               </div>
               <div className="footer-col">
