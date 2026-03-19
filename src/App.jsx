@@ -70,16 +70,6 @@ const products = [
     cta: 'Play Now',
   },
   {
-    name: 'Markets',
-    desc: 'Real estate prediction markets powered by Kalshi. Bet on home prices, rate movements, and housing policy. Crowd intelligence meets real estate data.',
-    icon: <I.TrendUp s={22} />,
-    color: '#3B82F6',
-    tag: 'Beta',
-    tagClass: 'tag-beta',
-    link: LINKS.blueprint,
-    cta: 'Join Beta',
-  },
-  {
     name: 'Ops',
     desc: 'Deal management for mortgage professionals. Live pipeline synced with your LOS, Gmail integration, realtor CRM, commission tracking — one dashboard for your entire business.',
     icon: <I.Layers s={22} />,
@@ -100,14 +90,30 @@ const audiences = [
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [email, setEmail] = useState('')
-  const [waitlistStatus, setWaitlistStatus] = useState(null)
+  const [waitlistStatus, setWaitlistStatus] = useState(null) // null | 'loading' | 'success' | 'error'
 
-  const handleWaitlist = (e) => {
+  const GOOGLE_SHEETS_URL = import.meta.env.VITE_WAITLIST_SHEETS_URL
+
+  const handleWaitlist = async (e) => {
     e.preventDefault()
     if (!email) return
-    setWaitlistStatus('success')
-    setEmail('')
-    setTimeout(() => setWaitlistStatus(null), 4000)
+    setWaitlistStatus('loading')
+    try {
+      const res = await fetch(GOOGLE_SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source: 'realstack.app', timestamp: new Date().toISOString() })
+      })
+      // no-cors returns opaque response, so we assume success if no error thrown
+      setWaitlistStatus('success')
+      setEmail('')
+      setTimeout(() => setWaitlistStatus(null), 5000)
+    } catch (err) {
+      console.error('Waitlist error:', err)
+      setWaitlistStatus('error')
+      setTimeout(() => setWaitlistStatus(null), 5000)
+    }
   }
 
   const scrollTo = (id) => {
@@ -155,15 +161,14 @@ export default function App() {
         <div className="container animate">
           <div className="label" style={{marginBottom:24}}>MORTGAGE TECHNOLOGY PLATFORM</div>
           <h1>The full real estate<br/>stack <span className="gradient">in your pocket.</span></h1>
-          <p className="subtitle">Mortgage calculator. Deal management. Prediction markets. Price discovery. Everything a modern mortgage professional needs — in one platform.</p>
+          <p className="subtitle">Mortgage calculator. Deal management. Price discovery. Everything a modern mortgage professional needs — in one platform.</p>
           <div className="btn-group" style={{justifyContent:'center'}}>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="btn btn-shimmer btn-lg">Try Blueprint Free</a>
             <a onClick={() => scrollTo('waitlist')} className="btn btn-secondary btn-lg" style={{cursor:'pointer'}}>Join the Waitlist <I.ArrowRight /></a>
           </div>
           <div className="hero-badges">
-            <div className="hero-chip"><div className="dot"></div>4 Products Live or In Beta</div>
+            <div className="hero-chip"><div className="dot"></div>3 Products Live or In Beta</div>
             <div className="hero-chip"><div className="dot" style={{background:'var(--accent)'}}></div>Built by a Broker</div>
-            <div className="hero-chip"><div className="dot" style={{background:'var(--teal)'}}></div>Kalshi Partnership</div>
           </div>
         </div>
       </section>
@@ -184,7 +189,7 @@ export default function App() {
             <div className="stat-label">States Licensed</div>
           </div>
           <div className="stat-item">
-            <div className="stat-value">4</div>
+            <div className="stat-value">3</div>
             <div className="stat-label">Products</div>
           </div>
         </div>
@@ -277,10 +282,6 @@ export default function App() {
                 <div className="founder-stat"><div className="value">13yr</div><div className="label">Bay Area Network</div></div>
                 <div className="founder-stat"><div className="value">8</div><div className="label">States Licensed</div></div>
               </div>
-              <div style={{marginTop:16,padding:20,background:'var(--bg-card)',border:'1px solid var(--border)',borderRadius:'var(--radius)',borderLeft:'3px solid var(--accent)'}}>
-                <div style={{fontFamily:'var(--mono)',fontSize:'0.65rem',fontWeight:600,textTransform:'uppercase',letterSpacing:'1.5px',color:'var(--accent-light)',marginBottom:8}}>PARTNERSHIP</div>
-                <p style={{fontSize:'0.85rem',color:'var(--text-secondary)',lineHeight:1.6}}>RealStack Markets is built in partnership with Kalshi, the first CFTC-regulated prediction market exchange. Real money. Real odds. Real signal.</p>
-              </div>
             </div>
           </div>
         </div>
@@ -293,11 +294,16 @@ export default function App() {
           <h2>The platform is live.<br/>The waitlist is for what's next.</h2>
           <p>Blueprint is free to use today. Join the waitlist to get early access to Ops, white-label LO tools, and platform updates before anyone else.</p>
           <form className="waitlist-form" onSubmit={handleWaitlist}>
-            <input type="email" placeholder="you@email.com" value={email} onChange={e => setEmail(e.target.value)} required />
-            <button type="submit" className="btn btn-accent" style={{whiteSpace:'nowrap'}}>Join Waitlist</button>
+            <input type="email" placeholder="you@email.com" value={email} onChange={e => setEmail(e.target.value)} required disabled={waitlistStatus === 'loading'} />
+            <button type="submit" className="btn btn-accent" style={{whiteSpace:'nowrap',opacity: waitlistStatus === 'loading' ? 0.6 : 1, pointerEvents: waitlistStatus === 'loading' ? 'none' : 'auto'}} disabled={waitlistStatus === 'loading'}>
+              {waitlistStatus === 'loading' ? 'Joining...' : 'Join Waitlist'}
+            </button>
           </form>
           {waitlistStatus === 'success' && (
             <p style={{color:'var(--green)',fontSize:'0.85rem',marginTop:16,fontFamily:'var(--mono)'}}>You're on the list. We'll be in touch.</p>
+          )}
+          {waitlistStatus === 'error' && (
+            <p style={{color:'var(--red, #EF4444)',fontSize:'0.85rem',marginTop:16,fontFamily:'var(--mono)'}}>Something went wrong. Try again or email chr1stogranger@gmail.com.</p>
           )}
           <div style={{marginTop:40,display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="btn btn-white">Try Blueprint Free</a>
@@ -322,7 +328,6 @@ export default function App() {
                 <h4>Products</h4>
                 <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer">Blueprint</a>
                 <a href={LINKS.pricepoint} target="_blank" rel="noopener noreferrer">PricePoint</a>
-                <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer">Markets</a>
                 <a onClick={() => scrollTo('waitlist')} style={{cursor:'pointer'}}>Ops</a>
               </div>
               <div className="footer-col">
