@@ -3,6 +3,7 @@ import { useState } from 'react'
 const LINKS = {
   blueprint: 'https://blueprint.realstack.app?theme=dark',
   pricepoint: 'https://blueprint.realstack.app?mode=pricepoint&theme=dark',
+  markets: 'https://realstack.app/markets',
   ops: 'https://ops.realstack.app',
   calendly: 'https://calendly.com/chrisgranger',
   substack: 'https://chrisgranger.substack.com',
@@ -76,7 +77,7 @@ const products = [
     color: '#3B82F6',
     tag: 'Beta',
     tagClass: 'tag-beta',
-    link: LINKS.blueprint,
+    link: LINKS.markets,
     cta: 'Join Beta',
   },
   {
@@ -102,20 +103,21 @@ export default function App() {
   const [email, setEmail] = useState('')
   const [waitlistStatus, setWaitlistStatus] = useState(null) // null | 'loading' | 'success' | 'error'
 
-  const GOOGLE_SHEETS_URL = import.meta.env.VITE_WAITLIST_SHEETS_URL
-
   const handleWaitlist = async (e) => {
     e.preventDefault()
     if (!email) return
     setWaitlistStatus('loading')
     try {
-      const res = await fetch(GOOGLE_SHEETS_URL, {
+      // POST to /api/waitlist (server-side proxy) — avoids CORS/opaque response issues
+      const res = await fetch('/api/waitlist', {
         method: 'POST',
-        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, source: 'realstack.app', timestamp: new Date().toISOString() })
       })
-      // no-cors returns opaque response, so we assume success if no error thrown
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || `Server error ${res.status}`)
+      }
       setWaitlistStatus('success')
       setEmail('')
       setTimeout(() => setWaitlistStatus(null), 5000)
@@ -338,7 +340,7 @@ export default function App() {
                 <h4>Products</h4>
                 <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer">Blueprint</a>
                 <a href={LINKS.pricepoint} target="_blank" rel="noopener noreferrer">PricePoint</a>
-                <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer">Markets</a>
+                <a href={LINKS.markets} target="_blank" rel="noopener noreferrer">Markets</a>
                 <a onClick={() => scrollTo('waitlist')} style={{cursor:'pointer'}}>Ops</a>
               </div>
               <div className="footer-col">
@@ -350,7 +352,7 @@ export default function App() {
               <div className="footer-col">
                 <h4>Legal</h4>
                 <a href="https://blueprint.realstack.app/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
-                <a href="https://ops.realstack.app/terms" target="_blank" rel="noopener noreferrer">Terms</a>
+                <a href="https://blueprint.realstack.app/terms" target="_blank" rel="noopener noreferrer">Terms</a>
               </div>
             </div>
           </div>
