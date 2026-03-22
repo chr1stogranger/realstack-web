@@ -1,26 +1,22 @@
 /**
- * /api/waitlist.js — Vercel serverless function for waitlist form submissions
+ * /api/waitlist.js — Server-side proxy for waitlist form submissions
  *
- * Server-side proxy for Google Sheets Apps Script endpoint.
- * Avoids CORS/opaque-response issues from browser-direct no-cors requests.
- * Returns real success/error JSON so the UI can show accurate feedback.
+ * Receives form data from the browser (no auth needed — it's a public signup form),
+ * then forwards to RealStack Ops API using a shared WAITLIST_API_KEY header.
+ * This replaces the old Google Sheets integration.
  *
- * Env vars needed (set in Vercel dashboard → Settings → Environment Variables):
- *   WAITLIST_SHEETS_URL — Google Apps Script web app URL (same as old VITE_WAITLIST_SHEETS_URL)
- *
- * Note: Keep VITE_WAITLIST_SHEETS_URL in the frontend build if other places use it,
- * but the waitlist form should now call /api/waitlist instead.
+ * Env vars required (set in Vercel → Settings → Environment Variables):
+ *   WAITLIST_API_KEY  — Shared secret matching the value in the Ops Vercel project
  */
 
 export default async function handler(req, res) {
-  // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { email, source, timestamp } = req.body || {}
+  const { email, firstName, lastName, phone } = req.body || {}
 
-  // Basic email validation
+  // Basic validation
   if (!email || typeof email !== 'string') {
     return res.status(400).json({ error: 'Email is required' })
   }
@@ -29,29 +25,33 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid email address' })
   }
 
-  const SHEETS_URL = process.env.WAITLIST_SHEETS_URL
+  const WAITLIST_API_KEY = process.env.WAITLIST_API_KEY
 
-  if (!SHEETS_URL) {
-    // Fallback: log to console in dev, still return success to not break the form
-    console.warn('[waitlist] WAITLIST_SHEETS_URL not configured — entry not saved', { email, source, timestamp })
-    return res.status(200).json({ ok: true, message: 'Recorded' })
+  if (!WAITLIST_API_KEY) {
+    console.error('[waitlist] WAITLIST_API_KEY not configured')
+    return res.status(500).json({ error: 'Server misconfiguration. Please email chr1stogranger@gmail.com to sign up.' })
   }
 
   try {
-    // Server-to-server: no CORS restrictions, get a real response
-    const response = await fetch(SHEETS_URL, {
+    const response = await fetch('https://ops.realstack.app/api/waitlist', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Waitlist-Key': WAITLIST_API_KEY,
+      },
       body: JSON.stringify({
         email: email.toLowerCase().trim(),
-        source: source || 'realstack.app',
-        timestamp: timestamp || new Date().toISOString()
-      })
+        firstName: (firstName || '').trim().slice(0, 100),
+        lastName: (lastName || '').trim().slice(0, 100),
+        phone: (phone || '').trim().slice(0, 30),
+        source: 'realstack.app',
+        timestamp: new Date().toISOString(),
+      }),
     })
 
     if (!response.ok) {
-      const text = await response.text().catch(() => '')
-      console.error('[waitlist] Sheets error:', response.status, text)
+      const j = await response.json().catch(() => ({}))
+      console.error('[waitlist] Ops API error:', response.status, j)
       return res.status(502).json({ error: 'Could not save to waitlist. Please try again.' })
     }
 
