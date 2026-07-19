@@ -9,9 +9,32 @@
  *   WAITLIST_API_KEY  — Shared secret matching the value in the Ops Vercel project
  */
 
+// In-memory per-IP rate limit (per lambda instance — good enough to stop
+// naive flooding of the Ops waitlist through this public proxy).
+const RATE_WINDOW_MS = 10 * 60 * 1000 // 10 min
+const RATE_MAX = 5
+const rateMap = new Map()
+function rateLimited(ip) {
+  const now = Date.now()
+  if (rateMap.size > 5000) rateMap.clear() // cap memory
+  const entry = rateMap.get(ip)
+  if (!entry || now - entry.start > RATE_WINDOW_MS) {
+    rateMap.set(ip, { start: now, count: 1 })
+    return false
+  }
+  entry.count++
+  return entry.count > RATE_MAX
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
+  }
+
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown'
+  if (rateLimited(ip)) {
+    res.setHeader('Retry-After', '600')
+    return res.status(429).json({ error: 'Too many requests — please try again later.' })
   }
 
   const { email, firstName, lastName, phone } = req.body || {}
