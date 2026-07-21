@@ -3,30 +3,34 @@
    Linear / Vercel / Stripe inspired
    =================================================== */
 :root {
-  --bg-base: #050505;
-  --bg-elevated: #0A0A0A;
-  --bg-card: #0F0F0F;
-  --bg-card-hover: #141414;
-  --bg-surface: #1A1A1A;
+  /* Grange brand kit — navy ground, blue accent, #2B4FCE gradient
+     partner only (never a flat fill). JetBrains Mono retired. */
+  --bg-base: #0a1120;
+  --bg-elevated: #0d1524;
+  --bg-card: #121c30;
+  --bg-card-hover: #1a2740;
+  --bg-surface: #162034;
 
-  --accent: #6366F1;
-  --accent-light: #818CF8;
-  --accent-bright: #A5B4FC;
-  --blue: #3B82F6;
-  --teal: #06B6D4;
-  --green: #10B981;
-  --purple: #8B5CF6;
-  --amber: #F59E0B;
+  --accent: #3B6BF5;
+  --accent-light: #6E90FF;
+  --accent-bright: #A9C0FF;
+  --accent-deep: #2B4FCE;   /* gradient partner ONLY — never a flat fill */
+  --blue: #3B6BF5;
+  --teal: #38c6c6;
+  --green: #12a150;
+  --purple: #8b7bf0;
+  --amber: #d98a0b;
+  --red: #e5484d;
 
   --text-primary: #EDEDED;
   --text-secondary: #A1A1A1;
-  --text-muted: #666666;
+  --text-muted: #737373;
 
-  --border: rgba(255,255,255,0.06);
-  --border-hover: rgba(255,255,255,0.12);
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.14);
 
   --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+  --mono: 'Geist Mono', 'SF Mono', 'JetBrains Mono', monospace;
 
   --radius: 12px;
   --radius-lg: 16px;
@@ -83,7 +87,7 @@ body::before {
 /* ───── HEADER ───── */
 .header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  background: rgba(5,5,5,0.7); backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(10,17,32,0.72); backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border);
 }
@@ -131,7 +135,7 @@ body::before {
   line-height: 1.0; margin-bottom: 24px; position: relative;
 }
 .hero .gradient {
-  background: linear-gradient(135deg, #A5B4FC, #3B82F6, #06B6D4, #10B981);
+  background: linear-gradient(135deg, #A9C0FF, #3B6BF5, #38c6c6, #12a150);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
@@ -152,16 +156,16 @@ body::before {
   text-decoration: none; letter-spacing: -0.01em;
 }
 .btn-accent {
-  background: linear-gradient(135deg, var(--accent), var(--blue));
-  color: #fff; box-shadow: 0 0 20px rgba(99,102,241,0.3);
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #fff; box-shadow: 0 0 20px rgba(59,107,245,0.3);
 }
-.btn-accent:hover { box-shadow: 0 0 30px rgba(99,102,241,0.5); transform: translateY(-1px); }
+.btn-accent:hover { box-shadow: 0 0 30px rgba(59,107,245,0.5); transform: translateY(-1px); }
 .btn-shimmer {
-  background: linear-gradient(90deg, var(--accent) 0%, var(--blue) 25%, var(--accent) 50%, var(--blue) 75%, var(--accent) 100%);
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-deep) 25%, var(--accent) 50%, var(--accent-deep) 75%, var(--accent) 100%);
   background-size: 200% 100%; animation: shimmer 3s linear infinite;
-  color: #fff; box-shadow: 0 0 20px rgba(99,102,241,0.3);
+  color: #fff; box-shadow: 0 0 20px rgba(59,107,245,0.3);
 }
-.btn-shimmer:hover { box-shadow: 0 0 30px rgba(99,102,241,0.5); transform: translateY(-1px); }
+.btn-shimmer:hover { box-shadow: 0 0 30px rgba(59,107,245,0.5); transform: translateY(-1px); }
 .btn-white { background: #fff; color: #000; }
 .btn-white:hover { opacity: 0.9; transform: translateY(-1px); }
 .btn-secondary {
@@ -206,7 +210,7 @@ section { padding: 100px 0; position: relative; }
 /* Divider glow */
 .glow-divider {
   width: 60px; height: 2px; margin: 0 auto 100px;
-  background: linear-gradient(90deg, var(--accent), var(--blue));
+  background: linear-gradient(90deg, var(--accent), var(--accent-deep));
   border-radius: 2px;
 }
 
@@ -238,9 +242,9 @@ section { padding: 100px 0; position: relative; }
   text-transform: uppercase; letter-spacing: 1.5px; padding: 4px 10px;
   border-radius: var(--radius-full); display: inline-block;
 }
-.tag-live { background: rgba(16,185,129,0.12); color: var(--green); }
-.tag-beta { background: rgba(99,102,241,0.12); color: var(--accent-light); }
-.tag-coming { background: rgba(245,158,11,0.12); color: var(--amber); }
+.tag-live { background: rgba(18,161,80,0.12); color: var(--green); }
+.tag-beta { background: rgba(59,107,245,0.12); color: var(--accent-light); }
+.tag-coming { background: rgba(217,138,11,0.12); color: var(--amber); }
 
 /* Card accent borders */
 .product-card::before {
@@ -305,7 +309,7 @@ section { padding: 100px 0; position: relative; }
 /* ───── CTA ───── */
 .cta-section {
   text-align: center; padding: 120px 0;
-  background: radial-gradient(ellipse at center, rgba(99,102,241,0.08) 0%, transparent 60%);
+  background: radial-gradient(ellipse at center, rgba(59,107,245,0.08) 0%, transparent 60%);
 }
 .cta-section h2 {
   font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.04em;

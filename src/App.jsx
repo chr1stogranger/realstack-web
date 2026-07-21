@@ -29,7 +29,7 @@ const I = {
 /* ─── Logo SVG ─── */
 const LogoIcon = ({ size = 32 }) => (
   <svg viewBox="0 0 100 100" fill="none" style={{width:size,height:size,borderRadius:size*0.22,overflow:'hidden',flexShrink:0}}>
-    <defs><linearGradient id="rs-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#6366F1"/><stop offset="100%" stopColor="#3B82F6"/></linearGradient></defs>
+    <defs><linearGradient id="rs-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#3B6BF5"/><stop offset="100%" stopColor="#2B4FCE"/></linearGradient></defs>
     <rect width="100" height="100" fill="url(#rs-bg)"/>
     <polygon points="50,12 8,30 50,25 92,30" fill="rgba(255,255,255,0.95)"/>
     <polygon points="50,25 92,30 92,34 50,29" fill="rgba(255,255,255,0.48)"/>
@@ -54,7 +54,7 @@ const products = [
     name: 'Blueprint',
     desc: 'The mortgage calculator that shows every dollar. Payment breakdowns, tax savings, amortization, side-by-side comparisons — built for the conversation between broker and client.',
     icon: <I.Grid s={22} />,
-    color: '#6366F1',
+    color: '#3B6BF5',
     tag: 'Live',
     tagClass: 'tag-live',
     link: LINKS.blueprint,
@@ -64,7 +64,7 @@ const products = [
     name: 'PricePoint',
     desc: 'A gamified real estate price guessing experience. Browse real listings, guess the price, see how close you get. Addictive engagement meets market education.',
     icon: <I.Target s={22} />,
-    color: '#06B6D4',
+    color: '#38c6c6',
     tag: 'Live',
     tagClass: 'tag-live',
     link: LINKS.pricepoint,
@@ -74,7 +74,7 @@ const products = [
     name: 'Markets',
     desc: 'Real estate prediction markets. Bet on home prices, rate movements, and housing policy. Crowd intelligence meets real estate data.',
     icon: <I.TrendUp s={22} />,
-    color: '#3B82F6',
+    color: '#8b7bf0',
     tag: 'Beta',
     tagClass: 'tag-beta',
     link: LINKS.markets,
@@ -84,7 +84,7 @@ const products = [
     name: 'Ops',
     desc: 'Deal management for mortgage professionals. Live pipeline synced with your LOS, Gmail integration, realtor CRM, commission tracking — one dashboard for your entire business.',
     icon: <I.Layers s={22} />,
-    color: '#10B981',
+    color: '#12a150',
     tag: 'Coming Soon',
     tagClass: 'tag-coming',
     link: null,
@@ -93,9 +93,9 @@ const products = [
 ]
 
 const audiences = [
-  { icon: <I.Users s={24} />, color: '#6366F1', title: 'Loan Officers', desc: 'White-label Blueprint for your clients. Manage your pipeline with Ops. Stand out with technology your competitors don\'t have.' },
-  { icon: <I.Home s={24} />, color: '#06B6D4', title: 'Homebuyers', desc: 'See every dollar before you commit. Compare scenarios, understand tax savings, and make the biggest purchase of your life with total clarity.' },
-  { icon: <I.Briefcase s={24} />, color: '#10B981', title: 'Real Estate Agents', desc: 'Send clients a Blueprint instead of a rate sheet. PricePoint drives engagement at open houses. Real tools that close deals faster.' },
+  { icon: <I.Users s={24} />, color: '#3B6BF5', title: 'Loan Officers', desc: 'White-label Blueprint for your clients. Manage your pipeline with Ops. Stand out with technology your competitors don\'t have.' },
+  { icon: <I.Home s={24} />, color: '#38c6c6', title: 'Homebuyers', desc: 'See every dollar before you commit. Compare scenarios, understand tax savings, and make the biggest purchase of your life with total clarity.' },
+  { icon: <I.Briefcase s={24} />, color: '#12a150', title: 'Real Estate Agents', desc: 'Send clients a Blueprint instead of a rate sheet. PricePoint drives engagement at open houses. Real tools that close deals faster.' },
 ]
 
 export default function App() {
