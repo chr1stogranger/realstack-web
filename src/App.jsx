@@ -51,7 +51,7 @@ const LogoIcon = ({ size = 32 }) => (
 
 const products = [
   {
-    name: 'Blueprint',
+    name: 'Mortgage Blueprint',
     desc: 'The mortgage calculator that shows every dollar. Payment breakdowns, tax savings, amortization, side-by-side comparisons — built for the conversation between broker and client.',
     icon: <I.Grid s={22} />,
     color: '#3B6BF5',
@@ -81,7 +81,7 @@ const products = [
     cta: 'Join Beta',
   },
   {
-    name: 'Ops',
+    name: 'RealStack Ops',
     desc: 'Deal management for mortgage professionals. Live pipeline synced with your LOS, Gmail integration, realtor CRM, commission tracking — one dashboard for your entire business.',
     icon: <I.Layers s={22} />,
     color: '#12a150',
