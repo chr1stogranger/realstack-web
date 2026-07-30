@@ -3,7 +3,6 @@ import { useState } from 'react'
 const LINKS = {
   blueprint: 'https://blueprint.realstack.app?theme=dark',
   pricepoint: 'https://blueprint.realstack.app?mode=pricepoint&theme=dark',
-  markets: 'https://realstack.app/markets',
   ops: 'https://ops.realstack.app',
   calendly: 'https://calendly.com/chrisgranger',
   substack: 'https://chrisgranger.substack.com',
@@ -353,7 +352,7 @@ export default function App() {
                 <h4>Products</h4>
                 <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer">Blueprint</a>
                 <a href={LINKS.pricepoint} target="_blank" rel="noopener noreferrer">PricePoint</a>
-                <a href={LINKS.markets} target="_blank" rel="noopener noreferrer">Markets</a>
+                <a onClick={() => scrollTo('waitlist')} style={{cursor:'pointer'}}>Markets</a>
                 <a onClick={() => scrollTo('waitlist')} style={{cursor:'pointer'}}>Ops</a>
               </div>
               <div className="footer-col">
