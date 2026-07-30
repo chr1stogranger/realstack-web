@@ -75,10 +75,12 @@ const products = [
     desc: 'Real estate prediction markets. Bet on home prices, rate movements, and housing policy. Crowd intelligence meets real estate data.',
     icon: <I.TrendUp s={22} />,
     color: '#8b7bf0',
-    tag: 'Beta',
-    tagClass: 'tag-beta',
-    link: LINKS.markets,
-    cta: 'Join Beta',
+    tag: 'Coming Soon',
+    tagClass: 'tag-coming',
+    // realstack.app/markets doesn't exist yet — route interest to the
+    // waitlist (null link scrolls to the form) instead of a 404.
+    link: null,
+    cta: 'Waitlist',
   },
   {
     name: 'RealStack Ops',
