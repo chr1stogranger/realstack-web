@@ -105,6 +105,7 @@ export default function App() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
+  const [company, setCompany] = useState('') // honeypot, stays empty for humans
   const [waitlistStatus, setWaitlistStatus] = useState(null) // null | 'loading' | 'success' | 'error'
 
   const handleWaitlist = async (e) => {
@@ -116,7 +117,7 @@ export default function App() {
       const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, firstName, lastName, phone })
+        body: JSON.stringify({ email, firstName, lastName, phone, company })
       })
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))
@@ -314,12 +315,13 @@ export default function App() {
           <h2>The platform is live.<br/>The waitlist is for what's next.</h2>
           <p>Blueprint is free to use today. Join the waitlist to get early access to Ops, white-label LO tools, and platform updates before anyone else.</p>
           <form className="waitlist-form" onSubmit={handleWaitlist}>
+            <input type="text" name="company" value={company} onChange={e => setCompany(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{position:'absolute',left:'-9999px'}} />
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,width:'100%',maxWidth:480}}>
-              <input type="text" placeholder="First name" value={firstName} onChange={e => setFirstName(e.target.value)} disabled={waitlistStatus === 'loading'} style={{padding:'12px 16px',borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(255,255,255,0.05)',color:'#EDEDED',fontSize:'0.9rem',outline:'none'}} />
-              <input type="text" placeholder="Last name" value={lastName} onChange={e => setLastName(e.target.value)} disabled={waitlistStatus === 'loading'} style={{padding:'12px 16px',borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(255,255,255,0.05)',color:'#EDEDED',fontSize:'0.9rem',outline:'none'}} />
+              <input type="text" placeholder="First name" maxLength={100} value={firstName} onChange={e => setFirstName(e.target.value)} disabled={waitlistStatus === 'loading'} style={{padding:'12px 16px',borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(255,255,255,0.05)',color:'#EDEDED',fontSize:'0.9rem',outline:'none'}} />
+              <input type="text" placeholder="Last name" maxLength={100} value={lastName} onChange={e => setLastName(e.target.value)} disabled={waitlistStatus === 'loading'} style={{padding:'12px 16px',borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(255,255,255,0.05)',color:'#EDEDED',fontSize:'0.9rem',outline:'none'}} />
             </div>
-            <input type="email" placeholder="you@email.com" value={email} onChange={e => setEmail(e.target.value)} required disabled={waitlistStatus === 'loading'} />
-            <input type="tel" placeholder="Phone (optional)" value={phone} onChange={e => setPhone(e.target.value)} disabled={waitlistStatus === 'loading'} style={{padding:'12px 16px',borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(255,255,255,0.05)',color:'#EDEDED',fontSize:'0.9rem',outline:'none',width:'100%',maxWidth:480,boxSizing:'border-box'}} />
+            <input type="email" placeholder="you@email.com" maxLength={254} value={email} onChange={e => setEmail(e.target.value)} required disabled={waitlistStatus === 'loading'} />
+            <input type="tel" placeholder="Phone (optional)" maxLength={30} value={phone} onChange={e => setPhone(e.target.value)} disabled={waitlistStatus === 'loading'} style={{padding:'12px 16px',borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(255,255,255,0.05)',color:'#EDEDED',fontSize:'0.9rem',outline:'none',width:'100%',maxWidth:480,boxSizing:'border-box'}} />
             <button type="submit" className="btn btn-accent" style={{whiteSpace:'nowrap',opacity: waitlistStatus === 'loading' ? 0.6 : 1, pointerEvents: waitlistStatus === 'loading' ? 'none' : 'auto'}} disabled={waitlistStatus === 'loading'}>
               {waitlistStatus === 'loading' ? 'Joining...' : 'Join Waitlist'}
             </button>

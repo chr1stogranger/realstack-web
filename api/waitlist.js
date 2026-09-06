@@ -1,15 +1,15 @@
 /**
- * /api/waitlist.js — Server-side proxy for waitlist form submissions
+ * /api/waitlist.js: Server-side proxy for waitlist form submissions
  *
- * Receives form data from the browser (no auth needed — it's a public signup form),
+ * Receives form data from the browser (no auth needed, it's a public signup form),
  * then forwards to RealStack Ops API using a shared WAITLIST_API_KEY header.
  * This replaces the old Google Sheets integration.
  *
  * Env vars required (set in Vercel → Settings → Environment Variables):
- *   WAITLIST_API_KEY  — Shared secret matching the value in the Ops Vercel project
+ *   WAITLIST_API_KEY: Shared secret matching the value in the Ops Vercel project
  */
 
-// In-memory per-IP rate limit (per lambda instance — good enough to stop
+// In-memory per-IP rate limit (per lambda instance, good enough to stop
 // naive flooding of the Ops waitlist through this public proxy).
 const RATE_WINDOW_MS = 10 * 60 * 1000 // 10 min
 const RATE_MAX = 5
@@ -34,10 +34,15 @@ export default async function handler(req, res) {
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown'
   if (rateLimited(ip)) {
     res.setHeader('Retry-After', '600')
-    return res.status(429).json({ error: 'Too many requests — please try again later.' })
+    return res.status(429).json({ error: 'Too many requests. Please try again later.' })
   }
 
-  const { email, firstName, lastName, phone } = req.body || {}
+  const { email, firstName, lastName, phone, company } = req.body || {}
+
+  // Honeypot: real users never see or fill this field. Bots do. Pretend success.
+  if (company && String(company).trim()) {
+    return res.status(200).json({ ok: true })
+  }
 
   // Basic validation
   if (!email || typeof email !== 'string') {
