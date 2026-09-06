@@ -188,7 +188,7 @@ export default function App() {
             <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} className="btn btn-secondary btn-lg" style={{cursor:'pointer'}}>Join the Waitlist <I.ArrowRight /></a>
           </div>
           <div className="hero-badges">
-            <div className="hero-chip"><div className="dot"></div>4 Products Live or In Beta</div>
+            <div className="hero-chip"><div className="dot"></div>2 Live. 2 Coming.</div>
             <div className="hero-chip"><div className="dot" style={{background:'var(--accent)'}}></div>Built by a Broker</div>
           </div>
         </div>
