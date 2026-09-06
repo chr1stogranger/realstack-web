@@ -135,7 +135,8 @@ export default function App() {
     }
   }
 
-  const scrollTo = (id) => {
+  const scrollTo = (id, e) => {
+    if (e) e.preventDefault()
     setMobileMenuOpen(false)
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -145,25 +146,25 @@ export default function App() {
       {/* ─── HEADER ─── */}
       <header className="header">
         <div className="container">
-          <div className="logo" onClick={() => scrollTo('hero')}>
+          <a href="#hero" className="logo" onClick={(e) => scrollTo('hero', e)} aria-label="RealStack home" style={{textDecoration:'none'}}>
             <LogoIcon size={30} />
             <span className="logo-text"><span className="real">Real</span><span className="stack">Stack</span></span>
-          </div>
+          </a>
           <nav className="nav">
-            <a onClick={() => scrollTo('products')}>Products</a>
-            <a onClick={() => scrollTo('for-who')}>For Who</a>
-            <a onClick={() => scrollTo('about')}>About</a>
+            <a href="#products" onClick={(e) => scrollTo('products', e)}>Products</a>
+            <a href="#for-who" onClick={(e) => scrollTo('for-who', e)}>For Who</a>
+            <a href="#about" onClick={(e) => scrollTo('about', e)}>About</a>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="nav-cta">Try Blueprint</a>
           </nav>
-          <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
+          <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu" aria-expanded={mobileMenuOpen} aria-controls="mobile-menu">
             {mobileMenuOpen ? <I.X /> : <I.Menu />}
           </button>
         </div>
         {mobileMenuOpen && (
-          <div style={{background:'var(--bg-elevated)',borderBottom:'1px solid var(--border)',padding:'16px 24px',display:'flex',flexDirection:'column',gap:'12px'}}>
-            <a onClick={() => scrollTo('products')} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>Products</a>
-            <a onClick={() => scrollTo('for-who')} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>For Who</a>
-            <a onClick={() => scrollTo('about')} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>About</a>
+          <div id="mobile-menu" style={{background:'var(--bg-elevated)',borderBottom:'1px solid var(--border)',padding:'16px 24px',display:'flex',flexDirection:'column',gap:'12px'}}>
+            <a href="#products" onClick={(e) => scrollTo('products', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>Products</a>
+            <a href="#for-who" onClick={(e) => scrollTo('for-who', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>For Who</a>
+            <a href="#about" onClick={(e) => scrollTo('about', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>About</a>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="btn btn-accent" style={{marginTop:'8px',textAlign:'center'}}>Try Blueprint</a>
           </div>
         )}
@@ -183,7 +184,7 @@ export default function App() {
           <p className="subtitle">Mortgage calculator. Deal management. Price discovery. Everything a modern mortgage professional needs, in one platform.</p>
           <div className="btn-group" style={{justifyContent:'center'}}>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="btn btn-shimmer btn-lg">Try Blueprint Free</a>
-            <a onClick={() => scrollTo('waitlist')} className="btn btn-secondary btn-lg" style={{cursor:'pointer'}}>Join the Waitlist <I.ArrowRight /></a>
+            <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} className="btn btn-secondary btn-lg" style={{cursor:'pointer'}}>Join the Waitlist <I.ArrowRight /></a>
           </div>
           <div className="hero-badges">
             <div className="hero-chip"><div className="dot"></div>4 Products Live or In Beta</div>
@@ -239,7 +240,7 @@ export default function App() {
                       {p.cta} <I.ArrowRight />
                     </a>
                   ) : (
-                    <a onClick={() => scrollTo('waitlist')} className="btn btn-ghost" style={{padding:'4px 0',fontSize:'0.82rem',color:p.color,cursor:'pointer'}}>
+                    <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} className="btn btn-ghost" style={{padding:'4px 0',fontSize:'0.82rem',color:p.color,cursor:'pointer'}}>
                       {p.cta} <I.ArrowRight />
                     </a>
                   )}
@@ -352,8 +353,8 @@ export default function App() {
                 <h4>Products</h4>
                 <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer">Blueprint</a>
                 <a href={LINKS.pricepoint} target="_blank" rel="noopener noreferrer">PricePoint</a>
-                <a onClick={() => scrollTo('waitlist')} style={{cursor:'pointer'}}>Markets</a>
-                <a onClick={() => scrollTo('waitlist')} style={{cursor:'pointer'}}>Ops</a>
+                <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} style={{cursor:'pointer'}}>Markets</a>
+                <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} style={{cursor:'pointer'}}>Ops</a>
               </div>
               <div className="footer-col">
                 <h4>Company</h4>
