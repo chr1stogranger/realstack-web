@@ -51,7 +51,7 @@ const LogoIcon = ({ size = 32 }) => (
 const products = [
   {
     name: 'Mortgage Blueprint',
-    desc: 'The mortgage calculator that shows every dollar. Payment breakdowns, tax savings, amortization, side-by-side comparisons — built for the conversation between broker and client.',
+    desc: 'The mortgage calculator that shows every dollar. Payment breakdowns, tax savings, amortization, side-by-side comparisons. Built for the conversation between broker and client.',
     icon: <I.Grid s={22} />,
     color: '#3B6BF5',
     tag: 'Live',
@@ -76,14 +76,14 @@ const products = [
     color: '#8b7bf0',
     tag: 'Coming Soon',
     tagClass: 'tag-coming',
-    // realstack.app/markets doesn't exist yet — route interest to the
+    // realstack.app/markets doesn't exist yet. Route interest to the
     // waitlist (null link scrolls to the form) instead of a 404.
     link: null,
     cta: 'Waitlist',
   },
   {
     name: 'RealStack Ops',
-    desc: 'Deal management for mortgage professionals. Live pipeline synced with your LOS, Gmail integration, realtor CRM, commission tracking — one dashboard for your entire business.',
+    desc: 'Deal management for mortgage professionals. Live pipeline synced with your LOS, Gmail integration, realtor CRM, commission tracking. One dashboard for your entire business.',
     icon: <I.Layers s={22} />,
     color: '#12a150',
     tag: 'Coming Soon',
@@ -112,7 +112,7 @@ export default function App() {
     if (!email) return
     setWaitlistStatus('loading')
     try {
-      // POST to /api/waitlist (server-side proxy) — forwards to Ops with shared key
+      // POST to /api/waitlist (server-side proxy), which forwards to Ops with shared key
       const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -180,7 +180,7 @@ export default function App() {
         <div className="container animate">
           <div className="label" style={{marginBottom:24}}>MORTGAGE TECHNOLOGY PLATFORM</div>
           <h1>The full real estate<br/>stack <span className="gradient">in your pocket.</span></h1>
-          <p className="subtitle">Mortgage calculator. Deal management. Price discovery. Everything a modern mortgage professional needs — in one platform.</p>
+          <p className="subtitle">Mortgage calculator. Deal management. Price discovery. Everything a modern mortgage professional needs, in one platform.</p>
           <div className="btn-group" style={{justifyContent:'center'}}>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="btn btn-shimmer btn-lg">Try Blueprint Free</a>
             <a onClick={() => scrollTo('waitlist')} className="btn btn-secondary btn-lg" style={{cursor:'pointer'}}>Join the Waitlist <I.ArrowRight /></a>
@@ -258,7 +258,7 @@ export default function App() {
           <div className="section-center">
             <div className="section-label animate">BUILT FOR</div>
             <h2 className="section-title animate delay-1">Technology that serves everyone in the transaction.</h2>
-            <p className="section-desc animate delay-2">Whether you originate loans, buy homes, or sell them — RealStack gives you an unfair advantage.</p>
+            <p className="section-desc animate delay-2">Whether you originate loans, buy homes, or sell them, RealStack gives you an unfair advantage.</p>
           </div>
           <div className="audience-grid">
             {audiences.map((a, i) => (
@@ -284,7 +284,7 @@ export default function App() {
               <div className="section-label">THE BUILDER</div>
               <h2 className="section-title" style={{marginTop:16}}>Built by a broker who closes loans every day.</h2>
               <p style={{color:'var(--text-secondary)',lineHeight:1.7,marginTop:16,fontSize:'0.95rem'}}>
-                RealStack isn't a VC-backed experiment from people who've never originated a loan. It's built by Chris Granger — a mortgage broker with 1,000+ loans closed, a 13-year realtor network across the Bay Area, and the daily frustration of using tools that weren't built for how deals actually work.
+                RealStack isn't a VC-backed experiment from people who've never originated a loan. It's built by Chris Granger, a mortgage broker with 1,000+ loans closed, a 13-year realtor network across the Bay Area, and the daily frustration of using tools that weren't built for how deals actually work.
               </p>
               <p style={{color:'var(--text-secondary)',lineHeight:1.7,marginTop:12,fontSize:'0.95rem'}}>
                 Every feature exists because it solved a real problem on a real deal. That's the difference.
