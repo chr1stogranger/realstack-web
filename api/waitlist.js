@@ -11,6 +11,8 @@
 
 // In-memory per-IP rate limit (per lambda instance, good enough to stop
 // naive flooding of the Ops waitlist through this public proxy).
+const ALLOWED_ORIGINS = new Set(['https://www.realstack.app', 'https://realstack.app'])
+
 const RATE_WINDOW_MS = 10 * 60 * 1000 // 10 min
 const RATE_MAX = 5
 const rateMap = new Map()
@@ -29,6 +31,13 @@ function rateLimited(ip) {
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
+  }
+
+  // Origin allowlist: only our own site may post here. Browsers always send
+  // Origin on cross-site POSTs, so a foreign origin is a hard no.
+  const origin = req.headers.origin
+  if (origin && !ALLOWED_ORIGINS.has(origin)) {
+    return res.status(403).json({ error: 'Forbidden' })
   }
 
   const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown'
