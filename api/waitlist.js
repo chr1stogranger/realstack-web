@@ -53,6 +53,8 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true })
   }
 
+  const str = (v) => (typeof v === 'string' ? v.trim() : '')
+
   // Basic validation
   if (!email || typeof email !== 'string') {
     return res.status(400).json({ error: 'Email is required' })
@@ -78,9 +80,9 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         email: email.toLowerCase().trim(),
-        firstName: (firstName || '').trim().slice(0, 100),
-        lastName: (lastName || '').trim().slice(0, 100),
-        phone: (phone || '').trim().slice(0, 30),
+        firstName: str(firstName).slice(0, 100),
+        lastName: str(lastName).slice(0, 100),
+        phone: str(phone).slice(0, 30),
         source: 'realstack.app',
         timestamp: new Date().toISOString(),
       }),

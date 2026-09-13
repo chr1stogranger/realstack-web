@@ -144,6 +144,7 @@ export default function App() {
 
   return (
     <>
+      <a href="#main" className="skip-link">Skip to content</a>
       {/* ─── HEADER ─── */}
       <header className="header">
         <div className="container">
@@ -170,6 +171,7 @@ export default function App() {
           </div>
         )}
       </header>
+      <main id="main">
 
       {/* ─── HERO ─── */}
       <section className="hero" id="hero">
@@ -327,10 +329,10 @@ export default function App() {
             </button>
           </form>
           {waitlistStatus === 'success' && (
-            <p style={{color:'var(--green)',fontSize:'0.85rem',marginTop:16,fontFamily:'var(--mono)'}}>You're on the list. We'll be in touch.</p>
+            <p role="status" aria-live="polite" style={{color:'var(--green)',fontSize:'0.85rem',marginTop:16,fontFamily:'var(--mono)'}}>You're on the list. We'll be in touch.</p>
           )}
           {waitlistStatus === 'error' && (
-            <p style={{color:'var(--red, #EF4444)',fontSize:'0.85rem',marginTop:16,fontFamily:'var(--mono)'}}>Something went wrong. Try again or email chr1stogranger@gmail.com.</p>
+            <p role="alert" style={{color:'var(--red, #EF4444)',fontSize:'0.85rem',marginTop:16,fontFamily:'var(--mono)'}}>Something went wrong. Try again or email chr1stogranger@gmail.com.</p>
           )}
           <div style={{marginTop:40,display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="btn btn-white">Try Blueprint Free</a>
@@ -340,6 +342,7 @@ export default function App() {
       </section>
 
       {/* ─── FOOTER ─── */}
+      </main>
       <footer className="footer">
         <div className="container">
           <div className="footer-grid">
