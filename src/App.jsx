@@ -376,7 +376,7 @@ export default function App() {
           </div>
           <div className="footer-bottom">
             <p>&copy; {new Date().getFullYear()} RealStack. All rights reserved.</p>
-            <span className="nmls">NMLS #952015 &middot; NMLS #2179191</span>
+            <span className="nmls">Chris Granger NMLS #952015 &middot; Xpert Home Lending, Inc. NMLS #2179191</span>
           </div>
         </div>
       </footer>
