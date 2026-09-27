@@ -355,20 +355,20 @@ export default function App() {
             </div>
             <div className="footer-links">
               <div className="footer-col">
-                <h4>Products</h4>
+                <h3>Products</h3>
                 <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer">Blueprint</a>
                 <a href={LINKS.pricepoint} target="_blank" rel="noopener noreferrer">PricePoint</a>
                 <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} style={{cursor:'pointer'}}>Markets</a>
                 <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} style={{cursor:'pointer'}}>Ops</a>
               </div>
               <div className="footer-col">
-                <h4>Company</h4>
+                <h3>Company</h3>
                 <a href={LINKS.substack} target="_blank" rel="noopener noreferrer">Newsletter</a>
                 <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 <a href={LINKS.calendly} target="_blank" rel="noopener noreferrer">Schedule a Call</a>
               </div>
               <div className="footer-col">
-                <h4>Legal</h4>
+                <h3>Legal</h3>
                 <a href="https://blueprint.realstack.app/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
                 <a href="https://blueprint.realstack.app/terms" target="_blank" rel="noopener noreferrer">Terms</a>
               </div>
