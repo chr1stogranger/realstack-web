@@ -71,7 +71,7 @@ const products = [
   },
   {
     name: 'Markets',
-    desc: 'Real estate prediction markets. Bet on home prices, rate movements, and housing policy. Crowd intelligence meets real estate data.',
+    desc: 'Real estate prediction markets. Forecast home prices, rate movements, and housing policy. Crowd intelligence meets real estate data.',
     icon: <I.TrendUp s={22} />,
     color: '#8b7bf0',
     tag: 'Coming Soon',
