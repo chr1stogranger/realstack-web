@@ -204,7 +204,7 @@ export default function App() {
             <div className="stat-label">Loans Closed</div>
           </div>
           <div className="stat-item">
-            <div className="stat-value">13yr</div>
+            <div className="stat-value">14yr</div>
             <div className="stat-label">Bay Area Network</div>
           </div>
           <div className="stat-item">
@@ -302,7 +302,7 @@ export default function App() {
               <div className="founder-stats">
                 <div className="founder-stat"><div className="value">1,000+</div><div className="label">Loans Closed</div></div>
                 <div className="founder-stat"><div className="value">290+</div><div className="label">Five-Star Reviews</div></div>
-                <div className="founder-stat"><div className="value">13yr</div><div className="label">Bay Area Network</div></div>
+                <div className="founder-stat"><div className="value">14yr</div><div className="label">Bay Area Network</div></div>
                 <div className="founder-stat"><div className="value">8</div><div className="label">States Licensed</div></div>
               </div>
             </div>
@@ -318,7 +318,7 @@ export default function App() {
           <p>Blueprint is free to use today. Join the waitlist to get early access to Ops, white-label LO tools, and platform updates before anyone else.</p>
           <form className="waitlist-form" onSubmit={handleWaitlist}>
             <input type="text" name="company" value={company} onChange={e => setCompany(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{position:'absolute',left:'-9999px'}} />
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,width:'100%',maxWidth:480}}>
+            <div className="waitlist-names">
               <input type="text" placeholder="First name" aria-label="First name" maxLength={100} value={firstName} onChange={e => setFirstName(e.target.value)} disabled={waitlistStatus === 'loading'} style={{padding:'12px 16px',borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(255,255,255,0.05)',color:'#EDEDED',fontSize:'0.9rem',outline:'none'}} />
               <input type="text" placeholder="Last name" aria-label="Last name" maxLength={100} value={lastName} onChange={e => setLastName(e.target.value)} disabled={waitlistStatus === 'loading'} style={{padding:'12px 16px',borderRadius:10,border:'1px solid rgba(255,255,255,0.1)',background:'rgba(255,255,255,0.05)',color:'#EDEDED',fontSize:'0.9rem',outline:'none'}} />
             </div>
@@ -363,6 +363,7 @@ export default function App() {
               </div>
               <div className="footer-col">
                 <h3>Company</h3>
+                <a href="https://www.chrisgrangermortgage.com/" target="_blank" rel="noopener">Work with Chris</a>
                 <a href={LINKS.substack} target="_blank" rel="noopener noreferrer">Newsletter</a>
                 <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 <a href={LINKS.calendly} target="_blank" rel="noopener noreferrer">Schedule a Call</a>

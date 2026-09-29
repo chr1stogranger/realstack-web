@@ -330,6 +330,18 @@ section { padding: 100px 0; position: relative; }
   color: var(--text-primary); font-family: var(--font); font-size: 0.9rem;
   outline: none; transition: border-color 0.2s;
 }
+/* Name row: two columns that can shrink (min-width:0), stacked on phones.
+   The old 1fr 1fr grid let the inputs' intrinsic width push a 390 px
+   viewport out to 524 px (audit finding #8). */
+.waitlist-names {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px; width: 100%; max-width: 480px;
+}
+.waitlist-names input { min-width: 0; width: 100%; box-sizing: border-box; }
+@media (max-width: 480px) {
+  .waitlist-names { grid-template-columns: minmax(0, 1fr); }
+}
+.waitlist-form input { min-width: 0; box-sizing: border-box; }
 .waitlist-form input::placeholder { color: var(--text-muted); }
 .waitlist-form input:focus { border-color: var(--accent); }
 
