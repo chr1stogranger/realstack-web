@@ -333,6 +333,7 @@ section { padding: 100px 0; position: relative; }
 /* Name row: two columns that can shrink (min-width:0), stacked on phones.
    The old 1fr 1fr grid let the inputs' intrinsic width push a 390 px
    viewport out to 524 px (audit finding #8). */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .waitlist-names {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px; width: 100%; max-width: 480px;
