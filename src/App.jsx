@@ -2,7 +2,8 @@ import { useState } from 'react'
 
 const LINKS = {
   blueprint: 'https://blueprint.realstack.app?theme=dark',
-  pricepoint: 'https://blueprint.realstack.app?mode=pricepoint&theme=dark',
+  pricepoint: 'https://blueprint.realstack.app/pricepoint?theme=dark',
+  markets: 'https://blueprint.realstack.app/markets?theme=dark',
   ops: 'https://ops.realstack.app',
   calendly: 'https://calendly.com/chrisgranger',
   substack: 'https://chrisgranger.substack.com',
@@ -74,12 +75,12 @@ const products = [
     desc: 'Real estate prediction markets. Forecast home prices, rate movements, and housing policy. Crowd intelligence meets real estate data.',
     icon: <I.TrendUp s={22} />,
     color: '#8b7bf0',
-    tag: 'Coming Soon',
-    tagClass: 'tag-coming',
-    // realstack.app/markets doesn't exist yet. Route interest to the
-    // waitlist (null link scrolls to the form) instead of a 404.
-    link: null,
-    cta: 'Waitlist',
+    tag: 'Live',
+    tagClass: 'tag-live',
+    // Markets lives inside Blueprint at /markets (realstack.app/markets
+    // 301s there via vercel.json).
+    link: LINKS.markets,
+    cta: 'Make a Call',
   },
   {
     name: 'RealStack Ops',
@@ -358,7 +359,7 @@ export default function App() {
                 <h3>Products</h3>
                 <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer">Blueprint</a>
                 <a href={LINKS.pricepoint} target="_blank" rel="noopener noreferrer">PricePoint</a>
-                <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} style={{cursor:'pointer'}}>Markets</a>
+                <a href={LINKS.markets} target="_blank" rel="noopener noreferrer">Markets</a>
                 <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} style={{cursor:'pointer'}}>Ops</a>
               </div>
               <div className="footer-col">
