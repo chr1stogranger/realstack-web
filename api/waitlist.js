@@ -70,7 +70,7 @@ export default async function handler(req, res) {
 
   if (!WAITLIST_API_KEY) {
     console.error('[waitlist] WAITLIST_API_KEY not configured')
-    return res.status(500).json({ error: 'Server misconfiguration. Please email chr1stogranger@gmail.com to sign up.' })
+    return res.status(500).json({ error: 'Server misconfiguration. Please email chris@chrisgrangermortgage.com to sign up.' })
   }
 
   try {
