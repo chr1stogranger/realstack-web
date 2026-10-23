@@ -101,6 +101,33 @@ const audiences = [
   { icon: <I.Briefcase s={24} />, color: '#12a150', title: 'Real Estate Agents', desc: 'Send clients a Blueprint instead of a rate sheet. PricePoint drives engagement at open houses. Real tools that close deals faster.' },
 ]
 
+/* Pricing is per loan officer (one workspace = one LO's book). Blueprint
+   stays free for homebuyers; the $49 plan is the LO-branded version. */
+const plans = [
+  {
+    name: 'Blueprint',
+    price: 49,
+    per: '/mo',
+    note: 'For loan officers not on Arive yet',
+    features: ['Blueprint with your branding', 'PricePoint', 'Share links and listing QR codes', 'Co-branded flyers'],
+  },
+  {
+    name: 'Ops + Blueprint',
+    price: 149,
+    per: '/mo',
+    note: 'or $1,490 a year (2 months free)',
+    featured: true,
+    features: ['Live pipeline synced with Arive', 'Leads, partners and Gmail in one place', 'Email flows and campaigns', 'Refi-check emails to past clients', 'Signature Studio', 'Everything in Blueprint', '2 assistant seats included'],
+  },
+  {
+    name: 'Team',
+    price: 129,
+    per: '/LO/mo',
+    note: 'For teams of 3 or more loan officers',
+    features: ['Everything in Ops + Blueprint', 'Manager view across every LO\'s book', 'Commission sharing controls', '2 assistant seats per LO'],
+  },
+]
+
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [email, setEmail] = useState('')
@@ -157,6 +184,7 @@ export default function App() {
           <nav className="nav">
             <a href="#products" onClick={(e) => scrollTo('products', e)}>Products</a>
             <a href="#for-who" onClick={(e) => scrollTo('for-who', e)}>For Who</a>
+            <a href="#pricing" onClick={(e) => scrollTo('pricing', e)}>Pricing</a>
             <a href="#about" onClick={(e) => scrollTo('about', e)}>About</a>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="nav-cta">Try Blueprint</a>
           </nav>
@@ -168,6 +196,7 @@ export default function App() {
           <div id="mobile-menu" style={{background:'var(--bg-elevated)',borderBottom:'1px solid var(--border)',padding:'16px 24px',display:'flex',flexDirection:'column',gap:'12px'}}>
             <a href="#products" onClick={(e) => scrollTo('products', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>Products</a>
             <a href="#for-who" onClick={(e) => scrollTo('for-who', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>For Who</a>
+            <a href="#pricing" onClick={(e) => scrollTo('pricing', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>Pricing</a>
             <a href="#about" onClick={(e) => scrollTo('about', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>About</a>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="btn btn-accent" style={{marginTop:'8px',textAlign:'center'}}>Try Blueprint</a>
           </div>
@@ -282,6 +311,45 @@ export default function App() {
 
       <div className="glow-divider"></div>
 
+      {/* ─── PRICING ─── */}
+      <section id="pricing">
+        <div className="container">
+          <div className="section-center">
+            <div className="section-label animate">PRICING</div>
+            <h2 className="section-title animate delay-1">One price per loan officer.</h2>
+            <p className="section-desc animate delay-2">No setup fees. No per-loan fees. Your assistants come along at no extra cost.</p>
+          </div>
+          <div className="founder-offer animate delay-2">
+            <div>
+              <div className="label">FOUNDING MEMBER OFFER</div>
+              <p className="founder-offer-title"><strong>$99/mo</strong> for Ops + Blueprint, locked in for life.</p>
+              <p className="founder-offer-desc">Open to the first 25 loan officers. Your first 60 days are free.</p>
+            </div>
+            <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} className="btn btn-accent">Claim a founder spot <I.ArrowRight /></a>
+          </div>
+          <div className="pricing-grid">
+            {plans.map((p, i) => (
+              <div key={p.name} className={`price-card animate delay-${i+1}${p.featured ? ' featured' : ''}`}>
+                {p.featured && <span className="card-tag tag-beta price-badge">Most popular</span>}
+                <h3>{p.name}</h3>
+                <div className="price-amount">${p.price.toLocaleString('en-US')}<span>{p.per}</span></div>
+                <p className="price-note">{p.note}</p>
+                <ul className="price-features">
+                  {p.features.map(f => <li key={f}>{f}</li>)}
+                </ul>
+                <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} className={`btn ${p.featured ? 'btn-accent' : 'btn-secondary'}`} style={{cursor:'pointer'}}>Join the waitlist</a>
+              </div>
+            ))}
+          </div>
+          <div className="pricing-fine">
+            <p>Extra assistant or processor seats are $25/mo each. Ops connects to your own Arive account.</p>
+            <p>Blueprint is always free for homebuyers. 10 or more loan officers? <a href={LINKS.calendly} target="_blank" rel="noopener noreferrer">Let's talk</a>.</p>
+          </div>
+        </div>
+      </section>
+
+      <div className="glow-divider"></div>
+
       {/* ─── FOUNDER / ABOUT ─── */}
       <section id="about">
         <div className="container">
@@ -364,6 +432,7 @@ export default function App() {
                 <a href={LINKS.pricepoint} target="_blank" rel="noopener noreferrer">PricePoint</a>
                 <a href={LINKS.markets} target="_blank" rel="noopener noreferrer">Markets</a>
                 <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} style={{cursor:'pointer'}}>Ops</a>
+                <a href="#pricing" onClick={(e) => scrollTo('pricing', e)} style={{cursor:'pointer'}}>Pricing</a>
               </div>
               <div className="footer-col">
                 <h3>Company</h3>

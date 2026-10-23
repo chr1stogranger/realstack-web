@@ -288,6 +288,49 @@ section { padding: 100px 0; position: relative; }
   display: flex; align-items: center; justify-content: center;
 }
 
+/* ───── PRICING ───── */
+.founder-offer {
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  background: linear-gradient(135deg, rgba(59,107,245,0.14), rgba(43,79,206,0.06));
+  border: 1px solid rgba(59,107,245,0.35); border-radius: var(--radius-lg);
+  padding: 24px 28px; margin-bottom: 16px;
+}
+.founder-offer-title { font-size: 1.15rem; margin-top: 8px; color: var(--text-primary); }
+.founder-offer-title strong { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; }
+.founder-offer-desc { font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px; }
+.founder-offer .btn { flex-shrink: 0; }
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start;
+}
+.price-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 28px; position: relative;
+  display: flex; flex-direction: column; gap: 12px; min-width: 0;
+}
+.price-card.featured { border-color: var(--accent); box-shadow: 0 0 40px rgba(59,107,245,0.15); }
+.price-card h3 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.03em; }
+.price-badge {
+  align-self: flex-start; margin: -8px 0 -4px;
+  font-family: var(--mono); font-size: 0.65rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1.5px; padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+.price-amount { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.price-amount span { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); letter-spacing: 0; margin-left: 2px; }
+.price-note { font-size: 0.82rem; color: var(--text-muted); }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 8px 0 12px; }
+.price-features li { font-size: 0.88rem; color: var(--text-secondary); padding-left: 20px; position: relative; line-height: 1.5; }
+.price-features li::before {
+  content: ''; position: absolute; left: 2px; top: 0.45em; width: 9px; height: 5px;
+  border-left: 2px solid var(--accent-light); border-bottom: 2px solid var(--accent-light);
+  transform: rotate(-45deg);
+}
+.price-card .btn { margin-top: auto; }
+.pricing-fine { margin-top: 24px; text-align: center; display: flex; flex-direction: column; gap: 6px; }
+.pricing-fine p { font-size: 0.85rem; color: var(--text-muted); }
+.pricing-fine a { color: var(--accent-light); }
+.pricing-fine a:hover { color: var(--accent-bright); }
+
 /* ───── FOUNDER ───── */
 .founder-section {
   display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
@@ -385,6 +428,8 @@ section { padding: 100px 0; position: relative; }
   .products-grid { grid-template-columns: 1fr; }
   .stats-bar { grid-template-columns: repeat(2, 1fr); }
   .audience-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .founder-offer { flex-direction: column; align-items: flex-start; }
   .founder-section { grid-template-columns: 1fr; gap: 32px; }
   .footer-grid { flex-direction: column; gap: 32px; }
   .footer-links { flex-direction: column; gap: 24px; }
