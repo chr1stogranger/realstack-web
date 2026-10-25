@@ -28,7 +28,7 @@ const I = {
 
 /* ─── Logo SVG ─── */
 const LogoIcon = ({ size = 32 }) => (
-  <svg viewBox="0 0 100 100" fill="none" style={{width:size,height:size,borderRadius:size*0.22,overflow:'hidden',flexShrink:0}}>
+  <svg viewBox="0 0 100 100" fill="none" aria-hidden="true" focusable="false" style={{width:size,height:size,borderRadius:size*0.22,overflow:'hidden',flexShrink:0}}>
     <defs><linearGradient id="rs-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#3B6BF5"/><stop offset="100%" stopColor="#2B4FCE"/></linearGradient></defs>
     <rect width="100" height="100" fill="url(#rs-bg)"/>
     <polygon points="50,12 8,30 50,25 92,30" fill="rgba(255,255,255,0.95)"/>
@@ -317,7 +317,7 @@ export default function App() {
           <div className="section-center">
             <div className="section-label animate">PRICING</div>
             <h2 className="section-title animate delay-1">One price per loan officer.</h2>
-            <p className="section-desc animate delay-2">No setup fees. No per-loan fees. Your assistants come along at no extra cost.</p>
+            <p className="section-desc animate delay-2">No setup fees. No per-loan fees. Two assistant seats included.</p>
           </div>
           <div className="founder-offer animate delay-2">
             <div>
@@ -358,7 +358,7 @@ export default function App() {
               <div className="section-label">THE BUILDER</div>
               <h2 className="section-title" style={{marginTop:16}}>Built by a broker who closes loans every day.</h2>
               <p style={{color:'var(--text-secondary)',lineHeight:1.7,marginTop:16,fontSize:'0.95rem'}}>
-                RealStack isn't a VC-backed experiment from people who've never originated a loan. It's built by Chris Granger, a mortgage broker with 1,000+ loans closed, a 13-year realtor network across the Bay Area, and the daily frustration of using tools that weren't built for how deals actually work.
+                RealStack isn't a VC-backed experiment from people who've never originated a loan. It's built by Chris Granger, a mortgage broker with 1,000+ loans closed, a 14-year realtor network across the Bay Area, and the daily frustration of using tools that weren't built for how deals actually work.
               </p>
               <p style={{color:'var(--text-secondary)',lineHeight:1.7,marginTop:12,fontSize:'0.95rem'}}>
                 Every feature exists because it solved a real problem on a real deal. That's the difference.
