@@ -85,7 +85,7 @@ const products = [
   },
   {
     name: 'RealStack Ops',
-    desc: 'Deal management for mortgage professionals. Live pipeline synced with your LOS, Gmail integration, realtor CRM, commission tracking. One dashboard for your entire business.',
+    desc: 'The mortgage CRM built on your LOS. Live pipeline synced with Arive, Gmail integration, realtor partners, email flows, commission tracking. One dashboard for your entire business.',
     icon: <I.Layers s={22} />,
     color: '#12a150',
     tag: 'Coming Soon',
@@ -96,7 +96,7 @@ const products = [
 ]
 
 const audiences = [
-  { icon: <I.Users s={24} />, color: '#3B6BF5', title: 'Loan Officers', desc: 'White-label Blueprint for your clients. Manage your pipeline with Ops. Stand out with technology your competitors don\'t have.' },
+  { icon: <I.Users s={24} />, color: '#3B6BF5', title: 'Loan Officers', desc: 'White-label Blueprint for your clients. Run your book from the Ops mortgage CRM. Stand out with technology your competitors don\'t have.' },
   { icon: <I.Home s={24} />, color: '#38c6c6', title: 'Homebuyers', desc: 'See every dollar before you commit. Compare scenarios, understand tax savings, and make the biggest purchase of your life with total clarity.' },
   { icon: <I.Briefcase s={24} />, color: '#12a150', title: 'Real Estate Agents', desc: 'Send clients a Blueprint instead of a rate sheet. PricePoint drives engagement at open houses. Real tools that close deals faster.' },
 ]
@@ -106,6 +106,7 @@ const audiences = [
 const plans = [
   {
     name: 'Blueprint',
+    tagline: 'Branded mortgage calculator',
     price: 49,
     per: '/mo',
     note: 'For loan officers not on Arive yet',
@@ -113,14 +114,16 @@ const plans = [
   },
   {
     name: 'Ops + Blueprint',
+    tagline: 'Mortgage CRM + calculator app',
     price: 149,
     per: '/mo',
     note: 'or $1,490 a year (2 months free)',
     featured: true,
-    features: ['Live pipeline synced with Arive', 'Leads, partners and Gmail in one place', 'Email flows and campaigns', 'Refi-check emails to past clients', 'Signature Studio', 'Everything in Blueprint', '2 assistant seats included'],
+    features: ['Mortgage CRM synced live with Arive', 'Leads, partners and Gmail in one place', 'Email flows and campaigns', 'Refi-check emails to past clients', 'Signature Studio', 'Everything in Blueprint', '2 assistant seats included'],
   },
   {
     name: 'Team',
+    tagline: 'Mortgage CRM for teams',
     price: 129,
     per: '/LO/mo',
     note: 'For teams of 3 or more loan officers',
@@ -317,7 +320,7 @@ export default function App() {
           <div className="section-center">
             <div className="section-label animate">PRICING</div>
             <h2 className="section-title animate delay-1">One price per loan officer.</h2>
-            <p className="section-desc animate delay-2">No setup fees. No per-loan fees. Two assistant seats included.</p>
+            <p className="section-desc animate delay-2">A mortgage CRM and a borrower calculator app in one plan. No setup fees. No per-loan fees. Two assistant seats included.</p>
           </div>
           <div className="founder-offer animate delay-2">
             <div>
@@ -332,6 +335,7 @@ export default function App() {
               <div key={p.name} className={`price-card animate delay-${i+1}${p.featured ? ' featured' : ''}`}>
                 {p.featured && <span className="card-tag tag-beta price-badge">Most popular</span>}
                 <h3>{p.name}</h3>
+                <div className="price-tagline">{p.tagline}</div>
                 <div className="price-amount">${p.price.toLocaleString('en-US')}<span>{p.per}</span></div>
                 <p className="price-note">{p.note}</p>
                 <ul className="price-features">
