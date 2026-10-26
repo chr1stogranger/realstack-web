@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const LINKS = {
   blueprint: 'https://blueprint.realstack.app?theme=dark',
@@ -24,6 +24,90 @@ const I = {
   ArrowRight: (p) => <svg aria-hidden="true" focusable="false" width={p.s||16} height={p.s||16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>,
   Menu: () => <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>,
   X: () => <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+  Play: () => <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>,
+  Pause: () => <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>,
+}
+
+/* ─── Product films (public/videos/, silent). "tall" = 9:16 for phones. ─── */
+const FILMS = [
+  { key: 'blueprint', label: 'Mortgage Blueprint', short: 'Blueprint', caption: 'Payment, cash to close, what you qualify for, what you can afford, the tax savings nobody tells you about, and PricePoint. Know before you buy.' },
+  { key: 'ops', label: 'RealStack Ops', short: 'Ops', caption: 'Your whole book on one screen: live pipeline, one-click status updates, refi radar, and follow-up on autopilot.' },
+  { key: 'together', label: 'Together', short: 'Together', caption: 'Clients plan in Blueprint. You run the deal in Ops. One platform.' },
+]
+
+const useMedia = (query) => {
+  const [match, setMatch] = useState(() => typeof window !== 'undefined' && window.matchMedia(query).matches)
+  useEffect(() => {
+    const mq = window.matchMedia(query)
+    const on = () => setMatch(mq.matches)
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [query])
+  return match
+}
+
+function Showreel() {
+  const [active, setActive] = useState(FILMS[0].key)
+  const [playing, setPlaying] = useState(false)
+  const tall = useMedia('(max-width: 768px)')
+  const reducedMotion = useMedia('(prefers-reduced-motion: reduce)')
+  const videoRef = useRef(null)
+  const visible = useRef(false)
+  const userPaused = useRef(reducedMotion)
+  const shape = tall ? 'tall' : 'wide'
+  const src = `/videos/${active}-${shape}`
+
+  // Play only while on screen (and never on its own under reduced motion).
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    const io = new IntersectionObserver(([e]) => {
+      visible.current = e.isIntersecting
+      if (e.isIntersecting && !userPaused.current) v.play().catch(() => {})
+      else v.pause()
+    }, { threshold: 0.35 })
+    io.observe(v)
+    return () => io.disconnect()
+  }, [src])
+
+  const toggle = () => {
+    const v = videoRef.current
+    if (!v) return
+    if (v.paused) { userPaused.current = false; v.play().catch(() => {}) }
+    else { userPaused.current = true; v.pause() }
+  }
+
+  const film = FILMS.find((f) => f.key === active)
+  return (
+    <section id="watch">
+      <div className="container">
+        <div className="section-center">
+          <div className="section-label animate">SEE IT IN ACTION</div>
+          <h2 className="section-title animate delay-1">Watch the stack work.</h2>
+        </div>
+        <div className="reel-tabs animate delay-2" role="tablist" aria-label="Product films">
+          {FILMS.map((f) => (
+            <button key={f.key} role="tab" id={`reel-tab-${f.key}`} aria-label={f.label} aria-selected={active === f.key} aria-controls="reel-panel"
+              className={`reel-tab${active === f.key ? ' active' : ''}`} onClick={() => setActive(f.key)}>
+              <span className="reel-label-full">{f.label}</span><span className="reel-label-short">{f.short}</span>
+            </button>
+          ))}
+        </div>
+        <div id="reel-panel" role="tabpanel" aria-labelledby={`reel-tab-${active}`} className="animate delay-3">
+          <div className={`reel-frame reel-${shape}`}>
+            <video key={src} ref={videoRef} poster={`${src}.jpg`} muted loop playsInline preload="metadata"
+              aria-label={`${film.label} product film`} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onClick={toggle}>
+              <source src={`${src}.mp4`} type="video/mp4" />
+            </video>
+            <button type="button" className="reel-toggle" onClick={toggle} aria-label={playing ? 'Pause video' : 'Play video'}>
+              {playing ? <I.Pause /> : <I.Play />}<span>{playing ? 'Pause' : 'Play'}</span>
+            </button>
+          </div>
+          <p className="reel-caption">{film.caption}</p>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 /* ─── Logo SVG ─── */
@@ -185,6 +269,7 @@ export default function App() {
             <span className="logo-text"><span className="real">Real</span><span className="stack">Stack</span></span>
           </a>
           <nav className="nav">
+            <a href="#watch" onClick={(e) => scrollTo('watch', e)}>Watch</a>
             <a href="#products" onClick={(e) => scrollTo('products', e)}>Products</a>
             <a href="#for-who" onClick={(e) => scrollTo('for-who', e)}>For Who</a>
             <a href="#pricing" onClick={(e) => scrollTo('pricing', e)}>Pricing</a>
@@ -197,6 +282,7 @@ export default function App() {
         </div>
         {mobileMenuOpen && (
           <div id="mobile-menu" style={{background:'var(--bg-elevated)',borderBottom:'1px solid var(--border)',padding:'16px 24px',display:'flex',flexDirection:'column',gap:'12px'}}>
+            <a href="#watch" onClick={(e) => scrollTo('watch', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>Watch</a>
             <a href="#products" onClick={(e) => scrollTo('products', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>Products</a>
             <a href="#for-who" onClick={(e) => scrollTo('for-who', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>For Who</a>
             <a href="#pricing" onClick={(e) => scrollTo('pricing', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>Pricing</a>
@@ -251,6 +337,9 @@ export default function App() {
           </div>
         </div>
       </div>
+
+      {/* ─── PRODUCT FILMS ─── */}
+      <Showreel />
 
       <div className="glow-divider"></div>
 
