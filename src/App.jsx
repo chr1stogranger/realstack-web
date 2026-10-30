@@ -26,9 +26,11 @@ const I = {
   X: () => <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
   Play: () => <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>,
   Pause: () => <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>,
+  SoundOn: () => <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>,
+  SoundOff: () => <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/></svg>,
 }
 
-/* ─── Product films (public/videos/, silent). "tall" = 9:16 for phones. ─── */
+/* ─── Product films (public/videos/, scored). They start muted so autoplay works; "Sound on" unmutes. "tall" = 9:16 for phones. ─── */
 const FILMS = [
   { key: 'blueprint', label: 'Mortgage Blueprint', short: 'Blueprint', caption: 'Payment, cash to close, what you qualify for, what you can afford, the tax savings nobody tells you about, and PricePoint. Know before you buy.' },
   { key: 'ops', label: 'RealStack Ops', short: 'Ops', caption: 'Your whole book on one screen: live pipeline, one-click status updates, refi radar, and follow-up on autopilot.' },
@@ -49,6 +51,7 @@ const useMedia = (query) => {
 function Showreel() {
   const [active, setActive] = useState(FILMS[0].key)
   const [playing, setPlaying] = useState(false)
+  const [muted, setMuted] = useState(true)
   const tall = useMedia('(max-width: 768px)')
   const reducedMotion = useMedia('(prefers-reduced-motion: reduce)')
   const videoRef = useRef(null)
@@ -77,6 +80,18 @@ function Showreel() {
     else { userPaused.current = true; v.pause() }
   }
 
+  // React only sets `muted` when a <video> mounts, so keep the property in step
+  // ourselves; the choice carries over when another film is picked.
+  useEffect(() => { if (videoRef.current) videoRef.current.muted = muted }, [src, muted])
+
+  const toggleSound = () => {
+    const v = videoRef.current
+    if (!v) return
+    v.muted = !muted
+    setMuted(!muted)
+    if (muted && v.paused) { userPaused.current = false; v.play().catch(() => {}) }
+  }
+
   const film = FILMS.find((f) => f.key === active)
   return (
     <section id="watch">
@@ -95,13 +110,18 @@ function Showreel() {
         </div>
         <div id="reel-panel" role="tabpanel" aria-labelledby={`reel-tab-${active}`} className="animate delay-3">
           <div className={`reel-frame reel-${shape}`}>
-            <video key={src} ref={videoRef} poster={`${src}.jpg`} muted loop playsInline preload="metadata"
+            <video key={src} ref={videoRef} poster={`${src}.jpg`} muted={muted} loop playsInline preload="metadata"
               aria-label={`${film.label} product film`} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onClick={toggle}>
               <source src={`${src}.mp4`} type="video/mp4" />
             </video>
-            <button type="button" className="reel-toggle" onClick={toggle} aria-label={playing ? 'Pause video' : 'Play video'}>
-              {playing ? <I.Pause /> : <I.Play />}<span>{playing ? 'Pause' : 'Play'}</span>
-            </button>
+            <div className="reel-controls">
+              <button type="button" className="reel-toggle" onClick={toggleSound} aria-label={muted ? 'Turn sound on' : 'Turn sound off'}>
+                {muted ? <I.SoundOn /> : <I.SoundOff />}<span>{muted ? 'Sound on' : 'Sound off'}</span>
+              </button>
+              <button type="button" className="reel-toggle" onClick={toggle} aria-label={playing ? 'Pause video' : 'Play video'}>
+                {playing ? <I.Pause /> : <I.Play />}<span>{playing ? 'Pause' : 'Play'}</span>
+              </button>
+            </div>
           </div>
           <p className="reel-caption">{film.caption}</p>
         </div>
