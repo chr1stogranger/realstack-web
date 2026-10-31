@@ -124,6 +124,7 @@ function Showreel() {
             </div>
           </div>
           <p className="reel-caption">{film.caption}</p>
+          <p className="reel-caption"><a href="/guides" style={{color:'var(--accent-light)',fontWeight:600}}>See the whole flow, step by step <I.ArrowRight /></a></p>
         </div>
       </div>
     </section>
@@ -294,6 +295,7 @@ export default function App() {
             <a href="#for-who" onClick={(e) => scrollTo('for-who', e)}>For Who</a>
             <a href="#pricing" onClick={(e) => scrollTo('pricing', e)}>Pricing</a>
             <a href="#about" onClick={(e) => scrollTo('about', e)}>About</a>
+            <a href="/guides">Guides</a>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="nav-cta">Try Blueprint</a>
           </nav>
           <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu" aria-expanded={mobileMenuOpen} aria-controls="mobile-menu">
@@ -307,6 +309,7 @@ export default function App() {
             <a href="#for-who" onClick={(e) => scrollTo('for-who', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>For Who</a>
             <a href="#pricing" onClick={(e) => scrollTo('pricing', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>Pricing</a>
             <a href="#about" onClick={(e) => scrollTo('about', e)} style={{color:'var(--text-secondary)',fontSize:'0.9rem',cursor:'pointer'}}>About</a>
+            <a href="/guides" style={{color:'var(--text-secondary)',fontSize:'0.9rem'}}>Guides</a>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="btn btn-accent" style={{marginTop:'8px',textAlign:'center'}}>Try Blueprint</a>
           </div>
         )}
@@ -546,6 +549,12 @@ export default function App() {
                 <a href={LINKS.markets} target="_blank" rel="noopener noreferrer">Markets</a>
                 <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} style={{cursor:'pointer'}}>Ops</a>
                 <a href="#pricing" onClick={(e) => scrollTo('pricing', e)} style={{cursor:'pointer'}}>Pricing</a>
+              </div>
+              <div className="footer-col">
+                <h3>Guides</h3>
+                <a href="/guides">How it works</a>
+                <a href="/guides/loan-officer">For loan officers</a>
+                <a href="/guides/borrower">For borrowers</a>
               </div>
               <div className="footer-col">
                 <h3>Company</h3>
