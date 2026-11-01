@@ -103,7 +103,16 @@ function Showreel() {
         <div className="reel-tabs animate delay-2" role="tablist" aria-label="Product films">
           {FILMS.map((f) => (
             <button key={f.key} role="tab" id={`reel-tab-${f.key}`} aria-label={f.label} aria-selected={active === f.key} aria-controls="reel-panel"
-              className={`reel-tab${active === f.key ? ' active' : ''}`} onClick={() => setActive(f.key)}>
+              tabIndex={active === f.key ? 0 : -1}
+              className={`reel-tab${active === f.key ? ' active' : ''}`} onClick={() => setActive(f.key)}
+              onKeyDown={(e) => {
+                if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                e.preventDefault();
+                const i = FILMS.findIndex((x) => x.key === f.key);
+                const n = FILMS[(i + (e.key === 'ArrowRight' ? 1 : FILMS.length - 1)) % FILMS.length];
+                setActive(n.key);
+                document.getElementById(`reel-tab-${n.key}`)?.focus();
+              }}>
               <span className="reel-label-full">{f.label}</span><span className="reel-label-short">{f.short}</span>
             </button>
           ))}
@@ -115,7 +124,7 @@ function Showreel() {
               <source src={`${src}.mp4`} type="video/mp4" />
             </video>
             <div className="reel-controls">
-              <button type="button" className="reel-toggle" onClick={toggleSound} aria-label={muted ? 'Turn sound on' : 'Turn sound off'}>
+              <button type="button" className="reel-toggle" onClick={toggleSound} aria-pressed={!muted} aria-label={muted ? 'Turn sound on' : 'Turn sound off'}>
                 {muted ? <I.SoundOn /> : <I.SoundOff />}<span>{muted ? 'Sound on' : 'Sound off'}</span>
               </button>
               <button type="button" className="reel-toggle" onClick={toggle} aria-label={playing ? 'Pause video' : 'Play video'}>
