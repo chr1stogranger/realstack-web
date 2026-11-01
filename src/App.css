@@ -83,6 +83,10 @@ body::before {
 .delay-3 { animation-delay: 0.3s; }
 .delay-4 { animation-delay: 0.4s; }
 .delay-5 { animation-delay: 0.5s; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .animate { opacity: 1; transform: none; }
+}
 
 /* ───── HEADER ───── */
 .header {
