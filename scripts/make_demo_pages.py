@@ -132,7 +132,7 @@ def page(key, p):
         <video src="{base}/wide.mp4" poster="{base}/poster.jpg"
           data-wide="{base}/wide.mp4" data-wide-poster="{base}/poster.jpg"
           data-tall="{base}/tall.mp4" data-tall-poster="{base}/poster-tall.jpg"
-          controls muted autoplay loop playsinline preload="metadata" aria-label="{e(p['name'])} product film"></video>
+          controls muted loop playsinline preload="metadata" aria-label="{e(p['name'])} product film"></video>
       </div>
       <div class="ctas">
         {ctas}

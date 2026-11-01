@@ -19,7 +19,9 @@
     if (wasPlaying || video.autoplay) video.play().catch(function () {});
   }
 
-  if (still.matches) { video.autoplay = false; video.pause(); }
+  // Autoplay is decided here, not in the markup, so a reduced-motion
+  // visitor never sees the film start before this script runs.
+  if (!still.matches) { video.autoplay = true; video.play().catch(function () {}); }
   pick();
   narrow.addEventListener('change', pick);
 })();
