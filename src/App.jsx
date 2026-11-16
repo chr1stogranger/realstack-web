@@ -530,7 +530,7 @@ export default function App() {
             <p role="status" aria-live="polite" style={{color:'var(--green)',fontSize:'0.85rem',marginTop:16,fontFamily:'var(--mono)'}}>You're on the list. We'll be in touch.</p>
           )}
           {waitlistStatus === 'error' && (
-            <p role="alert" style={{color:'var(--red, #EF4444)',fontSize:'0.85rem',marginTop:16,fontFamily:'var(--mono)'}}>Something went wrong. Try again or email <a href="mailto:chris@chrisgrangermortgage.com" style={{color:'inherit',textDecoration:'underline'}}>chris@chrisgrangermortgage.com</a>.</p>
+            <p role="alert" style={{color:'var(--red, #EF4444)',fontSize:'0.85rem',marginTop:16,fontFamily:'var(--mono)'}}>Something went wrong. Try again or email <a href="mailto:support@realstack.app" style={{color:'inherit',textDecoration:'underline'}}>support@realstack.app</a>.</p>
           )}
           <div style={{marginTop:40,display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap'}}>
             <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer" className="btn btn-white">Try Blueprint Free</a>
@@ -575,8 +575,8 @@ export default function App() {
               </div>
               <div className="footer-col">
                 <h3>Legal</h3>
-                <a href="https://blueprint.realstack.app/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
-                <a href="https://blueprint.realstack.app/terms" target="_blank" rel="noopener noreferrer">Terms</a>
+                <a href="/privacy">Privacy</a>
+                <a href="/terms">Terms</a>
                 <a href="/billing">Billing &amp; refunds</a>
               </div>
             </div>
