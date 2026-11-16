@@ -12,7 +12,7 @@ PAGES = {
     sub='The mortgage CRM built by a loan officer. Your live pipeline on one screen, status updates in one click, every condition with an owner, refi alerts on past clients, and follow-up on autopilot.',
     og='RealStack Ops: your whole book on one screen. The mortgage CRM built by a loan officer.',
     ctas=[('Claim a founder spot', '/#pricing', True), ('Book a demo', CAL, False)],
-    note='Founding member offer: Ops + Blueprint for $99/mo, locked in for life. Try it free for 14 days.'),
+    note='Founding member offer: Ops + Blueprint for $99/mo, locked in for life. First 25 loan officers, through March 31, 2027. Try it free for 14 days.'),
   'blueprint': dict(
     title='Mortgage Blueprint Demo', name='Mortgage Blueprint', secs=59,
     h1='Mortgage Blueprint in 59 seconds',

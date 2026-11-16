@@ -216,8 +216,13 @@ const audiences = [
   { icon: <I.Briefcase s={24} />, color: '#12a150', title: 'Real Estate Agents', desc: 'Send clients a Blueprint instead of a rate sheet. PricePoint drives engagement at open houses. Real tools that close deals faster.' },
 ]
 
+// Founder offer: first 25 LOs or through March 31, 2027 (Pacific), whichever
+// comes first. Ops enforces both; the site hides the offer after the date.
+const FOUNDER_DEADLINE = Date.parse('2027-04-01T07:00:00Z')
+const founderOpen = () => Date.now() < FOUNDER_DEADLINE
+
 const SIGNUP_PLANS = [
-  { plan: 'founder', label: 'Founding member, $99/mo per LO (first 25)' },
+  { plan: 'founder', label: 'Founding member, $99/mo per LO (through Mar 31, 2027)' },
   { plan: 'ops_monthly', label: 'Ops + Blueprint, $179/mo per LO' },
   { plan: 'ops_yearly', label: 'Ops + Blueprint, $1,790/yr per LO' },
   { plan: 'team', label: 'Team (3+ LOs), $149/mo per LO' },
@@ -487,14 +492,14 @@ export default function App() {
             <h2 className="section-title animate delay-1">One price per loan officer.</h2>
             <p className="section-desc animate delay-2">A mortgage CRM and a borrower calculator app in one plan. No setup fees. No per-loan fees. Two assistant seats included.</p>
           </div>
-          <div className="founder-offer animate delay-2">
+          {founderOpen() && <div className="founder-offer animate delay-2">
             <div>
               <div className="label">FOUNDING MEMBER OFFER</div>
               <p className="founder-offer-title"><strong>$99/mo</strong> for Ops + Blueprint, locked in for life.</p>
-              <p className="founder-offer-desc">Open to the first 25 loan officers. Try it free for 14 days.</p>
+              <p className="founder-offer-desc">Open to the first 25 loan officers, through March 31, 2027. Try it free for 14 days.</p>
             </div>
             <a href="#pricing" onClick={(e) => openSignup('founder', e)} className="btn btn-accent">Claim a founder spot <I.ArrowRight /></a>
-          </div>
+          </div>}
           <div className="pricing-grid">
             {plans.map((p, i) => (
               <div key={p.name} className={`price-card animate delay-${i+1}${p.featured ? ' featured' : ''}`}>
@@ -604,7 +609,7 @@ export default function App() {
                 <input type="text" name="company" value={signup.company} onChange={e => setSignup(s => ({ ...s, company: e.target.value }))} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{position:'absolute',left:'-9999px'}} />
                 <label htmlFor="su-plan">Plan</label>
                 <select id="su-plan" value={signup.plan} onChange={e => setSignup(s => ({ ...s, plan: e.target.value }))}>
-                  {SIGNUP_PLANS.map(o => <option key={o.plan} value={o.plan}>{o.label}</option>)}
+                  {SIGNUP_PLANS.filter(o => o.plan !== 'founder' || founderOpen()).map(o => <option key={o.plan} value={o.plan}>{o.label}</option>)}
                 </select>
                 <label htmlFor="su-name">Your name</label>
                 <input id="su-name" type="text" autoComplete="name" maxLength={120} required value={signup.name} onChange={e => setSignup(s => ({ ...s, name: e.target.value }))} />
