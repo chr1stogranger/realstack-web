@@ -447,7 +447,7 @@ export default function App() {
             <div>
               <div className="label">FOUNDING MEMBER OFFER</div>
               <p className="founder-offer-title"><strong>$99/mo</strong> for Ops + Blueprint, locked in for life.</p>
-              <p className="founder-offer-desc">Open to the first 25 loan officers. Your first 60 days are free.</p>
+              <p className="founder-offer-desc">Open to the first 25 loan officers. Try it free for 14 days.</p>
             </div>
             <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} className="btn btn-accent">Claim a founder spot <I.ArrowRight /></a>
           </div>
@@ -468,6 +468,7 @@ export default function App() {
           </div>
           <div className="pricing-fine">
             <p>Extra assistant or processor seats are $25/mo each. Ops connects to your own Arive account.</p>
+            <p>Billed monthly. Cancel anytime; no refunds for partial months. <a href="/billing">Billing and cancellation policy</a>.</p>
             <p>Blueprint is always free for homebuyers. 10 or more loan officers? <a href={LINKS.calendly} target="_blank" rel="noopener noreferrer">Let's talk</a>.</p>
           </div>
         </div>
@@ -576,6 +577,7 @@ export default function App() {
                 <h3>Legal</h3>
                 <a href="https://blueprint.realstack.app/privacy" target="_blank" rel="noopener noreferrer">Privacy</a>
                 <a href="https://blueprint.realstack.app/terms" target="_blank" rel="noopener noreferrer">Terms</a>
+                <a href="/billing">Billing &amp; refunds</a>
               </div>
             </div>
           </div>
