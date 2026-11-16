@@ -202,10 +202,11 @@ const products = [
     desc: 'The mortgage CRM built on your LOS. Live pipeline synced with Arive, Gmail integration, realtor partners, email flows, commission tracking. One dashboard for your entire business.',
     icon: <I.Layers s={22} />,
     color: '#12a150',
-    tag: 'Coming Soon',
-    tagClass: 'tag-coming',
+    tag: 'Live',
+    tagClass: 'tag-live',
     link: null,
-    cta: 'Waitlist',
+    anchor: 'pricing',
+    cta: 'Start free trial',
   },
 ]
 
@@ -215,11 +216,20 @@ const audiences = [
   { icon: <I.Briefcase s={24} />, color: '#12a150', title: 'Real Estate Agents', desc: 'Send clients a Blueprint instead of a rate sheet. PricePoint drives engagement at open houses. Real tools that close deals faster.' },
 ]
 
+const SIGNUP_PLANS = [
+  { plan: 'founder', label: 'Founding member, $99/mo per LO (first 25)' },
+  { plan: 'ops_monthly', label: 'Ops + Blueprint, $179/mo per LO' },
+  { plan: 'ops_yearly', label: 'Ops + Blueprint, $1,790/yr per LO' },
+  { plan: 'team', label: 'Team (3+ LOs), $149/mo per LO' },
+  { plan: 'blueprint', label: 'Blueprint only, $79/mo' },
+]
+
 /* Pricing is per loan officer (one workspace = one LO's book). Blueprint
    stays free for homebuyers; the $79 plan is the LO-branded version. */
 const plans = [
   {
     name: 'Blueprint',
+    plan: 'blueprint',
     tagline: 'Branded mortgage calculator',
     price: 79,
     per: '/mo',
@@ -228,15 +238,17 @@ const plans = [
   },
   {
     name: 'Ops + Blueprint',
+    plan: 'ops_monthly',
     tagline: 'Mortgage CRM + calculator app',
     price: 179,
     per: '/mo',
     note: 'or $1,790 a year (2 months free)',
     featured: true,
-    features: ['Mortgage CRM synced live with Arive', 'Leads, partners and your Gmail or Outlook in one place', 'Email flows and campaigns', 'Lender program limits and guidelines', 'Signature Studio', 'Everything in Blueprint', '2 assistant seats included'],
+    features: ['Mortgage CRM synced live with Arive', 'Leads, partners and your Gmail or Outlook in one place', 'Email flows and campaigns', 'Refi-check emails to past clients', 'Lender conditions from your Gmail', 'Lender program limits and guidelines', 'Signature Studio', 'Everything in Blueprint', '2 assistant seats included'],
   },
   {
     name: 'Team',
+    plan: 'team',
     tagline: 'Mortgage CRM for teams',
     price: 149,
     per: '/LO/mo',
@@ -253,6 +265,38 @@ export default function App() {
   const [phone, setPhone] = useState('')
   const [company, setCompany] = useState('') // honeypot, stays empty for humans
   const [waitlistStatus, setWaitlistStatus] = useState(null) // null | 'loading' | 'success' | 'error'
+  // "Start free trial": a dialog that emails a link; clicking it in Ops creates
+  // the workspace (api/signup.js → Ops api/_signupCore.js).
+  const [signup, setSignup] = useState(null) // null | { plan, name, email, phone, company, status, error }
+
+  const openSignup = (plan, e) => {
+    if (e) e.preventDefault()
+    setMobileMenuOpen(false)
+    setSignup({ plan, name: '', email: '', phone: '', company: '', status: null, error: '' })
+  }
+  useEffect(() => {
+    if (!signup) return undefined
+    const onKey = (e) => { if (e.key === 'Escape') setSignup(null) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [signup])
+  const submitSignup = async (e) => {
+    e.preventDefault()
+    if (!signup || signup.status === 'loading') return
+    setSignup(s => ({ ...s, status: 'loading', error: '' }))
+    try {
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan: signup.plan, name: signup.name, email: signup.email, phone: signup.phone, company: signup.company }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.error || 'Could not start your trial. Please try again.')
+      setSignup(s => ({ ...s, status: 'sent' }))
+    } catch (err) {
+      setSignup(s => ({ ...s, status: null, error: err.message }))
+    }
+  }
 
   const handleWaitlist = async (e) => {
     e.preventDefault()
@@ -342,7 +386,7 @@ export default function App() {
             <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} className="btn btn-secondary btn-lg" style={{cursor:'pointer'}}>Join the Waitlist <I.ArrowRight /></a>
           </div>
           <div className="hero-badges">
-            <div className="hero-chip"><div className="dot"></div>3 Live. 1 Coming.</div>
+            <div className="hero-chip"><div className="dot"></div>4 Live.</div>
             <div className="hero-chip"><div className="dot" style={{background:'var(--accent)'}}></div>Built by a Broker</div>
           </div>
         </div>
@@ -398,7 +442,7 @@ export default function App() {
                       {p.cta} <I.ArrowRight />
                     </a>
                   ) : (
-                    <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} className="btn btn-ghost" style={{padding:'4px 0',fontSize:'0.82rem',color:p.color,cursor:'pointer'}}>
+                    <a href={`#${p.anchor || 'waitlist'}`} onClick={(e) => scrollTo(p.anchor || 'waitlist', e)} className="btn btn-ghost" style={{padding:'4px 0',fontSize:'0.82rem',color:p.color,cursor:'pointer'}}>
                       {p.cta} <I.ArrowRight />
                     </a>
                   )}
@@ -449,7 +493,7 @@ export default function App() {
               <p className="founder-offer-title"><strong>$99/mo</strong> for Ops + Blueprint, locked in for life.</p>
               <p className="founder-offer-desc">Open to the first 25 loan officers. Try it free for 14 days.</p>
             </div>
-            <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} className="btn btn-accent">Claim a founder spot <I.ArrowRight /></a>
+            <a href="#pricing" onClick={(e) => openSignup('founder', e)} className="btn btn-accent">Claim a founder spot <I.ArrowRight /></a>
           </div>
           <div className="pricing-grid">
             {plans.map((p, i) => (
@@ -462,13 +506,13 @@ export default function App() {
                 <ul className="price-features">
                   {p.features.map(f => <li key={f}>{f}</li>)}
                 </ul>
-                <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} className={`btn ${p.featured ? 'btn-accent' : 'btn-secondary'}`} style={{cursor:'pointer'}}>Join the waitlist</a>
+                <a href="#pricing" onClick={(e) => openSignup(p.plan, e)} className={`btn ${p.featured ? 'btn-accent' : 'btn-secondary'}`} style={{cursor:'pointer'}}>Start free trial</a>
               </div>
             ))}
           </div>
           <div className="pricing-fine">
             <p>Extra assistant or processor seats are $25/mo each. Ops connects to your own Arive account.</p>
-            <p>Billed monthly. Cancel anytime; no refunds for partial months. <a href="/billing">Billing and cancellation policy</a>.</p>
+            <p>14 days free, no card needed. Billed monthly, or yearly on Ops + Blueprint. Cancel anytime; no refunds for partial months. <a href="/billing">Billing and cancellation policy</a>.</p>
             <p>Blueprint is always free for homebuyers. 10 or more loan officers? <a href={LINKS.calendly} target="_blank" rel="noopener noreferrer">Let's talk</a>.</p>
           </div>
         </div>
@@ -511,7 +555,7 @@ export default function App() {
         <div className="container animate">
           <div className="label" style={{marginBottom:16}}>EARLY ACCESS</div>
           <h2>The platform is live.<br/>The waitlist is for what's next.</h2>
-          <p>Blueprint is free to use today. Join the waitlist to get early access to Ops, white-label LO tools, and platform updates before anyone else.</p>
+          <p>Blueprint is free to use today, and Ops is open for 14-day trials. Join the waitlist for new products and platform updates before anyone else.</p>
           <form className="waitlist-form" onSubmit={handleWaitlist}>
             <input type="text" name="company" value={company} onChange={e => setCompany(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{position:'absolute',left:'-9999px'}} />
             <label htmlFor="wl-first" className="sr-only">First name</label>
@@ -541,6 +585,43 @@ export default function App() {
 
       {/* ─── FOOTER ─── */}
       </main>
+
+      {signup && (
+        <div className="signup-backdrop" role="presentation" onClick={(e) => { if (e.target === e.currentTarget) setSignup(null) }}>
+          <div className="signup-dialog" role="dialog" aria-modal="true" aria-labelledby="signup-title">
+            <button type="button" className="signup-close" aria-label="Close" onClick={() => setSignup(null)}><I.X /></button>
+            {signup.status === 'sent' ? (
+              <div role="status" aria-live="polite">
+                <div className="label">CHECK YOUR EMAIL</div>
+                <h3 id="signup-title">One more step</h3>
+                <p className="signup-copy">We sent a link to <strong>{signup.email}</strong>. Open it to create your workspace. Your 14-day trial starts then, and the link expires in an hour.</p>
+                <button type="button" className="btn btn-secondary" onClick={() => setSignup(null)}>Done</button>
+              </div>
+            ) : (
+              <form onSubmit={submitSignup}>
+                <div className="label">START FREE TRIAL</div>
+                <h3 id="signup-title">14 days free. No card needed.</h3>
+                <input type="text" name="company" value={signup.company} onChange={e => setSignup(s => ({ ...s, company: e.target.value }))} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{position:'absolute',left:'-9999px'}} />
+                <label htmlFor="su-plan">Plan</label>
+                <select id="su-plan" value={signup.plan} onChange={e => setSignup(s => ({ ...s, plan: e.target.value }))}>
+                  {SIGNUP_PLANS.map(o => <option key={o.plan} value={o.plan}>{o.label}</option>)}
+                </select>
+                <label htmlFor="su-name">Your name</label>
+                <input id="su-name" type="text" autoComplete="name" maxLength={120} required value={signup.name} onChange={e => setSignup(s => ({ ...s, name: e.target.value }))} />
+                <label htmlFor="su-email">Work email</label>
+                <input id="su-email" type="email" autoComplete="email" maxLength={254} required value={signup.email} onChange={e => setSignup(s => ({ ...s, email: e.target.value }))} />
+                <label htmlFor="su-phone">Phone (optional)</label>
+                <input id="su-phone" type="tel" autoComplete="tel" maxLength={30} value={signup.phone} onChange={e => setSignup(s => ({ ...s, phone: e.target.value }))} />
+                {signup.error && <p role="alert" className="signup-error">{signup.error}</p>}
+                <button type="submit" className="btn btn-accent" disabled={signup.status === 'loading'} style={{opacity: signup.status === 'loading' ? 0.6 : 1}}>
+                  {signup.status === 'loading' ? 'Sending...' : 'Email me the link'}
+                </button>
+                <p className="signup-fine">Sign in with the Google or Microsoft account for this email, or with an emailed link. Ops connects to your own Arive account. <a href="/billing">Billing policy</a></p>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
       <footer className="footer">
         <div className="container">
           <div className="footer-grid">
