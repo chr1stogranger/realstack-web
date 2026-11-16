@@ -216,29 +216,29 @@ const audiences = [
 ]
 
 /* Pricing is per loan officer (one workspace = one LO's book). Blueprint
-   stays free for homebuyers; the $49 plan is the LO-branded version. */
+   stays free for homebuyers; the $79 plan is the LO-branded version. */
 const plans = [
   {
     name: 'Blueprint',
     tagline: 'Branded mortgage calculator',
-    price: 49,
+    price: 79,
     per: '/mo',
     note: 'For loan officers not on Arive yet',
-    features: ['Blueprint with your branding', 'PricePoint', 'Share links and listing QR codes', 'Co-branded flyers'],
+    features: ['Your personal Blueprint link', 'Refi proposals that read the borrower\'s statement', 'PricePoint', 'Share links and listing QR codes', 'Co-branded flyers'],
   },
   {
     name: 'Ops + Blueprint',
     tagline: 'Mortgage CRM + calculator app',
-    price: 149,
+    price: 179,
     per: '/mo',
-    note: 'or $1,490 a year (2 months free)',
+    note: 'or $1,790 a year (2 months free)',
     featured: true,
-    features: ['Mortgage CRM synced live with Arive', 'Leads, partners and Gmail in one place', 'Email flows and campaigns', 'Refi-check emails to past clients', 'Signature Studio', 'Everything in Blueprint', '2 assistant seats included'],
+    features: ['Mortgage CRM synced live with Arive', 'Leads, partners and your Gmail or Outlook in one place', 'Email flows and campaigns', 'Lender program limits and guidelines', 'Signature Studio', 'Everything in Blueprint', '2 assistant seats included'],
   },
   {
     name: 'Team',
     tagline: 'Mortgage CRM for teams',
-    price: 129,
+    price: 149,
     per: '/LO/mo',
     note: 'For teams of 3 or more loan officers',
     features: ['Everything in Ops + Blueprint', 'Manager view across every LO\'s book', 'Commission sharing controls', '2 assistant seats per LO'],
