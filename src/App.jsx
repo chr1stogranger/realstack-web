@@ -221,6 +221,18 @@ const audiences = [
 const FOUNDER_DEADLINE = Date.parse('2027-04-01T07:00:00Z')
 const founderOpen = () => Date.now() < FOUNDER_DEADLINE
 
+// "How RealStack compares": only prices each vendor publishes itself, dated.
+// Re-check before editing a number (see the pricing page artifact's sources).
+const COMPARE_AS_OF = 'November 15, 2026'
+const comparisons = [
+  { need: 'Mortgage CRM', tools: 'RAD CRM Expert, BNTouch Individual', price: '$165–$197/mo', ours: 'Included, synced live with Arive' },
+  { need: 'Borrower scenarios and refi proposals', tools: 'MortgageCoach, MBS Highway', price: '$150–$199.95/mo', ours: 'Included (Mortgage Blueprint)' },
+  { need: 'Co-branded flyers', tools: 'ListReports', price: '$150/mo', ours: 'Included, with payment and buydown math' },
+  { need: 'Past-client refi alerts', tools: 'Homebot', price: '$125–$300/mo', ours: 'Included (Refi Hunter and refi-check emails)' },
+  { need: 'Setup fee', tools: 'BNTouch, LoanOfficer.ai', price: '$125–$299 once', ours: 'None' },
+  { need: 'Assistant seats', tools: 'RAD CRM', price: '$25/mo each', ours: '2 included per LO' },
+]
+
 const SIGNUP_PLANS = [
   { plan: 'founder', label: 'Founding member, $99/mo per LO (through Mar 31, 2027)' },
   { plan: 'ops_monthly', label: 'Ops + Blueprint, $179/mo per LO' },
@@ -523,6 +535,33 @@ export default function App() {
         </div>
       </section>
 
+      {/* ─── COMPARE ─── */}
+      <section id="compare" className="compare-section">
+        <div className="container">
+          <div className="section-center">
+            <div className="section-label">HOW REALSTACK COMPARES</div>
+            <h2 className="section-title">One plan instead of four subscriptions.</h2>
+            <p className="section-desc">Most loan officers piece this together from separate tools. Here is what each piece costs on its own, and what comes with Ops + Blueprint at $179 a month.</p>
+          </div>
+          <div className="compare-wrap" role="region" aria-label="Price comparison" tabIndex={0}>
+            <table className="compare-table">
+              <thead>
+                <tr><th scope="col">What you need</th><th scope="col">Bought separately</th><th scope="col">Their price</th><th scope="col" className="ours">RealStack</th></tr>
+              </thead>
+              <tbody>
+                {comparisons.map(c => (
+                  <tr key={c.need}><th scope="row">{c.need}</th><td data-label="Bought separately">{c.tools}</td><td data-label="Their price" className="num">{c.price}</td><td data-label="RealStack" className="ours">{c.ours}</td></tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr><th scope="row">Monthly total</th><td data-label="Bought separately">CRM + scenarios + flyers + refi alerts</td><td data-label="Their price" className="num">From $590/mo</td><td data-label="RealStack" className="ours"><strong>$179/mo</strong> ($99 for founders)</td></tr>
+              </tfoot>
+            </table>
+          </div>
+          <p className="compare-fine">Prices from each vendor's public pricing page on {COMPARE_AS_OF}, per loan officer, before tax; they can change. Some of these tools do things RealStack doesn't yet, like built-in calling and texting. Product names belong to their owners.</p>
+        </div>
+      </section>
+
       <div className="glow-divider"></div>
 
       {/* ─── FOUNDER / ABOUT ─── */}
@@ -643,8 +682,9 @@ export default function App() {
                 <a href={LINKS.blueprint} target="_blank" rel="noopener noreferrer">Blueprint</a>
                 <a href={LINKS.pricepoint} target="_blank" rel="noopener noreferrer">PricePoint</a>
                 <a href={LINKS.markets} target="_blank" rel="noopener noreferrer">Markets</a>
-                <a href="#waitlist" onClick={(e) => scrollTo('waitlist', e)} style={{cursor:'pointer'}}>Ops</a>
+                <a href="#pricing" onClick={(e) => scrollTo('pricing', e)} style={{cursor:'pointer'}}>Ops</a>
                 <a href="#pricing" onClick={(e) => scrollTo('pricing', e)} style={{cursor:'pointer'}}>Pricing</a>
+                <a href="#compare" onClick={(e) => scrollTo('compare', e)} style={{cursor:'pointer'}}>Compare</a>
               </div>
               <div className="footer-col">
                 <h3>Guides</h3>

@@ -525,3 +525,34 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .signup-fine { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; margin-top: 8px; }
 .signup-fine a { color: var(--accent-light); }
 select:focus-visible { outline: 2px solid #3B6BF5; outline-offset: 2px; }
+
+/* ───── COMPARE ("How RealStack compares") ───── */
+.compare-section { padding-top: 40px; }
+.compare-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg-card); }
+.compare-wrap:focus-visible { outline: 2px solid #3B6BF5; outline-offset: 2px; }
+.compare-table { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 0.88rem; }
+.compare-table th, .compare-table td { text-align: left; vertical-align: top; padding: 14px 18px; border-bottom: 1px solid var(--border); line-height: 1.5; }
+.compare-table thead th { font-family: var(--mono); font-size: 0.65rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); background: var(--bg-surface); }
+.compare-table tbody th, .compare-table tfoot th { font-weight: 600; color: var(--text-primary); }
+.compare-table td { color: var(--text-secondary); }
+.compare-table .num { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--text-primary); }
+.compare-table .ours { background: rgba(59,107,245,0.08); color: var(--text-primary); }
+.compare-table thead .ours { color: var(--accent-light); }
+.compare-table tfoot th, .compare-table tfoot td { border-bottom: 0; border-top: 1px solid var(--border-hover); font-size: 0.95rem; }
+.compare-table tfoot strong { font-size: 1.05rem; color: var(--accent-bright); }
+.compare-fine { margin-top: 16px; text-align: center; font-size: 0.78rem; color: var(--text-muted); max-width: 720px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+/* Phones: each row becomes a card so the RealStack answer is never off screen. */
+@media (max-width: 640px) {
+  .compare-wrap { overflow-x: visible; }
+  .compare-table { min-width: 0; }
+  .compare-table thead { display: none; }
+  .compare-table tr { display: block; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .compare-table tfoot tr { border-bottom: 0; border-top: 1px solid var(--border-hover); }
+  .compare-table th, .compare-table td, .compare-table tfoot th, .compare-table tfoot td { display: block; border: 0; padding: 3px 18px; }
+  .compare-table th { padding-bottom: 6px; }
+  .compare-table td::before { content: attr(data-label); display: block; font-family: var(--mono); font-size: 0.6rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); }
+  .compare-table .ours { background: none; margin-top: 4px; }
+  .compare-table .ours::before { color: var(--accent-light); }
+  .compare-table .num { white-space: normal; }
+}
