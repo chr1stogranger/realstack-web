@@ -169,7 +169,7 @@ const products = [
     desc: 'The mortgage calculator that shows every dollar. Payment breakdowns, tax savings, amortization, side-by-side comparisons. Built for the conversation between broker and client.',
     icon: <I.Grid s={22} />,
     color: '#3B6BF5',
-    ctaColor: '#6E90FF', // accent-light: #3B6BF5 at 0.82rem on the card is 3.7:1, below AA
+    ctaColor: '#2B4FCE', // link text on white needs the deeper shade for AA (6.6:1)
     tag: 'Live',
     tagClass: 'tag-live',
     link: LINKS.blueprint,
@@ -179,7 +179,8 @@ const products = [
     name: 'PricePoint',
     desc: 'A gamified real estate price guessing experience. Browse real listings, guess the price, see how close you get. Addictive engagement meets market education.',
     icon: <I.Target s={22} />,
-    color: '#38c6c6',
+    color: '#13A5A5',
+    ctaColor: '#0B7577',
     tag: 'Live',
     tagClass: 'tag-live',
     link: LINKS.pricepoint,
@@ -190,6 +191,7 @@ const products = [
     desc: 'Real estate prediction markets. Forecast home prices, rate movements, and housing policy. Crowd intelligence meets real estate data.',
     icon: <I.TrendUp s={22} />,
     color: '#8b7bf0',
+    ctaColor: '#5B42C9',
     tag: 'Live',
     tagClass: 'tag-live',
     // Markets lives inside Blueprint at /markets (realstack.app/markets
@@ -202,6 +204,7 @@ const products = [
     desc: 'The mortgage CRM built on your LOS. Live pipeline synced with Arive, Gmail integration, realtor partners, email flows, commission tracking. One dashboard for your entire business.',
     icon: <I.Layers s={22} />,
     color: '#12a150',
+    ctaColor: '#0E7A3C',
     tag: 'Live',
     tagClass: 'tag-live',
     link: null,
@@ -212,7 +215,7 @@ const products = [
 
 const audiences = [
   { icon: <I.Users s={24} />, color: '#3B6BF5', title: 'Loan Officers', desc: 'White-label Blueprint for your clients. Run your book from the Ops mortgage CRM. Stand out with technology your competitors don\'t have.' },
-  { icon: <I.Home s={24} />, color: '#38c6c6', title: 'Homebuyers', desc: 'See every dollar before you commit. Compare scenarios, understand tax savings, and make the biggest purchase of your life with total clarity.' },
+  { icon: <I.Home s={24} />, color: '#13A5A5', title: 'Homebuyers', desc: 'See every dollar before you commit. Compare scenarios, understand tax savings, and make the biggest purchase of your life with total clarity.' },
   { icon: <I.Briefcase s={24} />, color: '#12a150', title: 'Real Estate Agents', desc: 'Send clients a Blueprint instead of a rate sheet. PricePoint drives engagement at open houses. Real tools that close deals faster.' },
 ]
 
@@ -459,7 +462,7 @@ export default function App() {
                       {p.cta} <I.ArrowRight />
                     </a>
                   ) : (
-                    <a href={`#${p.anchor || 'waitlist'}`} onClick={(e) => scrollTo(p.anchor || 'waitlist', e)} className="btn btn-ghost" style={{padding:'4px 0',fontSize:'0.82rem',color:p.color,cursor:'pointer'}}>
+                    <a href={`#${p.anchor || 'waitlist'}`} onClick={(e) => scrollTo(p.anchor || 'waitlist', e)} className="btn btn-ghost" style={{padding:'4px 0',fontSize:'0.82rem',color:p.ctaColor || p.color,cursor:'pointer'}}>
                       {p.cta} <I.ArrowRight />
                     </a>
                   )}
