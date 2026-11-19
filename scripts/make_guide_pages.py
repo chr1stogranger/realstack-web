@@ -146,7 +146,7 @@ def page(slug, title, desc, body, film=False):
     <meta property="og:description" content="{html.escape(desc)}" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="{BASE}{path}" />
-    <meta property="og:image" content="{BASE}/og-image.png" />
+    <meta property="og:image" content="{BASE}/og-image.png?v=2" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="{html.escape(title)}" />
     <meta name="twitter:description" content="{html.escape(desc)}" />

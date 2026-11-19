@@ -6,28 +6,30 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="16x16 32x32" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="How RealStack collects, uses and protects information for loan officers and their teams, including Gmail, Outlook and billing data." />
-    <meta name="theme-color" content="#0a1120" />
+    <meta name="theme-color" content="#FFFFFF" />
     <meta property="og:title" content="RealStack Privacy Policy" />
     <meta property="og:description" content="How RealStack collects, uses and protects information for loan officers and their teams, including Gmail, Outlook and billing data." />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://www.realstack.app/privacy" />
-    <meta property="og:image" content="https://www.realstack.app/og-image.png" />
+    <meta property="og:image" content="https://www.realstack.app/og-image.png?v=2" />
     <link rel="canonical" href="https://www.realstack.app/privacy" />
     <title>RealStack Privacy Policy</title>
     <link rel="stylesheet" href="/fonts/fonts.css" />
     <style>
       :root {
-        --bg-base: #0a1120; --bg-card: #121c30;
-        --accent: #3B6BF5; --accent-light: #6E90FF; --accent-deep: #2B4FCE;
-        --text-primary: #EDEDED; --text-secondary: #A1A1A1; --text-muted: #8A8A8A;
-        --border: rgba(255,255,255,0.08); --border-hover: rgba(255,255,255,0.14);
+        /* White look (2026-11-18), same tokens as src/App.css */
+        --bg-base: #FFFFFF; --bg-card: #FFFFFF;
+        --accent: #3B6BF5; --accent-light: #2B5BE6; --accent-deep: #2B4FCE;
+        --text-primary: #0B2545; --text-secondary: #46566B; --text-muted: #667085;
+        --border: #DFE5EE; --border-hover: #C9D3E0;
+        --pastel: linear-gradient(135deg, #DDF5F2 0%, #E5EEFF 55%, #EEE7FB 100%);
         --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         --mono: 'Geist Mono', 'SF Mono', monospace;
       }
       *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
       body {
         font-family: var(--font); color: var(--text-primary); line-height: 1.65;
-        background: radial-gradient(1200px 600px at 50% -10%, rgba(59,107,245,0.20), transparent 70%), var(--bg-base);
+        background: radial-gradient(1200px 600px at 50% -10%, rgba(59,107,245,0.08), transparent 70%), var(--bg-base);
         min-height: 100vh; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column;
       }
       a { color: var(--accent-light); text-decoration: none; }
@@ -35,7 +37,7 @@
       header { max-width: 760px; width: 100%; margin: 0 auto; padding: 24px 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
       .logo { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.04em; color: var(--text-primary); }
       .logo span { color: var(--accent-light); }
-      .back { padding: 7px 14px; border-radius: 9999px; border: 1px solid var(--border); color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; }
+      .back { padding: 7px 14px; border-radius: 9999px; border: 1px solid var(--border-hover); background: #fff; color: var(--text-primary); font-size: 0.85rem; font-weight: 600; }
       .back:hover { color: var(--text-primary); border-color: var(--border-hover); text-decoration: none; }
       main { flex: 1; max-width: 760px; width: 100%; margin: 0 auto; padding: 24px 16px 72px; }
       .overline { font-family: var(--mono); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-light); }
@@ -47,7 +49,7 @@
       p + p { margin-top: 10px; }
       ul { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
       strong { color: var(--text-primary); font-weight: 600; }
-      .summary { padding: 18px 20px; border-radius: 14px; background: var(--bg-card); border: 1px solid var(--border); margin-bottom: 8px; }
+      .summary { padding: 18px 20px; border-radius: 14px; background: var(--pastel); border: 1px solid #D3E2F2; margin-bottom: 8px; }
       .summary ul { gap: 4px; }
       footer { max-width: 760px; width: 100%; margin: 0 auto; padding: 24px 16px 40px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border); }
       .legal-links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
