@@ -13,6 +13,14 @@
 const ALLOWED_ORIGINS = new Set(['https://www.realstack.app', 'https://realstack.app'])
 const PLANS = new Set(['founder', 'ops_monthly', 'ops_yearly', 'team', 'blueprint'])
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+// The founder offer closes March 31, 2027 (midnight Pacific). Ops enforces it
+// too; this keeps a stale page from asking for it after the date.
+const FOUNDER_CLOSES_MS = Date.parse('2027-04-01T07:00:00Z')
+function planFor(plan) {
+  if (!PLANS.has(plan)) return 'ops_monthly'
+  if (plan === 'founder' && Date.now() >= FOUNDER_CLOSES_MS) return 'ops_monthly'
+  return plan
+}
 
 const RATE_WINDOW_MS = 10 * 60 * 1000 // 10 min
 const RATE_MAX = 5
@@ -78,7 +86,7 @@ export default async function handler(req, res) {
         email: email.toLowerCase().trim(),
         name: str(name).slice(0, 120),
         phone: str(phone).slice(0, 30),
-        plan: PLANS.has(plan) ? plan : 'ops_monthly',
+        plan: planFor(plan),
       }),
     })
     const j = await response.json().catch(() => ({}))
