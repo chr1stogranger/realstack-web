@@ -510,7 +510,7 @@ export default function App() {
           {founderOpen() && <div className="founder-offer animate delay-2">
             <div>
               <div className="label">FOUNDING MEMBER OFFER</div>
-              <p className="founder-offer-title"><strong>$99/mo</strong> for Ops + Blueprint, locked in for life.</p>
+              <p className="founder-offer-title"><strong>$99/mo</strong> for Ops + Blueprint, locked in for as long as you stay subscribed.</p>
               <p className="founder-offer-desc">Open to the first 25 loan officers, through March 31, 2027. Try it free for 14 days.</p>
             </div>
             <a href="#pricing" onClick={(e) => openSignup('founder', e)} className="btn btn-accent">Claim a founder spot <I.ArrowRight /></a>
