@@ -90,7 +90,7 @@ CSS = """
       .lane-head span { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
       .stage { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 14px; align-items: stretch; }
       .stage-name { padding: 16px 4px; }
-      .stage-name h3 { font-size: 1.1rem; }
+      .stage-name h2 { font-size: 1.1rem; margin: 0; }
       .cell { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow-card); }
       .cell .who { display: none; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
       .cell.lo { border-left: 3px solid var(--accent); }
@@ -301,7 +301,7 @@ def flow_body():
         lo_cell = f'<div class="cell lo"><p class="who">You, in Ops</p><p>{md(lo)}</p></div>'
         br_cell = (f'<div class="cell borrower"><p class="who">Your borrower, in Blueprint</p><p>{md(br)}</p></div>'
                    if br else '<div class="cell borrower empty" aria-hidden="true"></div>')
-        rows.append(f'        <div class="stage"><div class="stage-name"><span class="num">STAGE {i:02d}</span><h3>{html.escape(name)}</h3></div>{lo_cell}{br_cell}</div>')
+        rows.append(f'        <div class="stage"><div class="stage-name"><span class="num">STAGE {i:02d}</span><h2>{html.escape(name)}</h2></div>{lo_cell}{br_cell}</div>')
     return f"""      <div class="hero">
         <p class="overline">How RealStack works</p>
         <h1>From first call to funded loan, on one platform.</h1>
